@@ -8,122 +8,141 @@
   </head>
   <body>
     <main class="page">
-      <header class="card hero">
-        <h1>ГрадоАналитик</h1>
-        <p class="subtitle">Предварительный ИИ-анализ земельного участка</p>
-        <p class="warning">Не является юридическим заключением</p>
+      <header class="topbar card">
+        <div>
+          <p class="brand">ГрадоАналитик</p>
+          <p class="brand-subtitle">ИИ-анализ земельного участка</p>
+        </div>
+        <p class="legal-badge">Не является юридическим заключением</p>
       </header>
 
-      <section class="layout" aria-label="Форма анализа">
-        <div class="column">
-          <section class="card">
-            <h2>Данные участка</h2>
-            <div class="fields">
-              <label>
-                Кадастровый номер
-                <input type="text" placeholder="Например, 77:01:0004012:3456" />
-              </label>
-              <label>
-                Адрес
-                <input type="text" placeholder="Город, улица, дом/ориентир" />
-              </label>
-              <label>
-                Площадь участка, м²
-                <input type="number" min="0" step="1" placeholder="1200" />
-              </label>
-              <label>
-                Размеры участка, если известны
-                <input type="text" placeholder="40 × 30 м" />
-              </label>
-              <label>
-                Сторона подъезда
-                <select>
-                  <option>север</option>
-                  <option>юг</option>
-                  <option>восток</option>
-                  <option>запад</option>
-                  <option selected>неизвестно</option>
-                </select>
-              </label>
-            </div>
-          </section>
+      <section class="dashboard" aria-label="Экран анализа участка">
+        <section class="panel card input-panel">
+          <h1>ИИ-анализ земельного участка</h1>
+          <p class="intro">
+            Проверяем ПЗЗ, ГПЗУ, ЕГРН, ограничения и риски и формируем предварительный вывод по участку.
+          </p>
 
-          <section class="card">
-            <h2>Цель анализа</h2>
-            <fieldset class="radio-group">
-              <legend>Выберите режим</legend>
-              <label><input type="radio" name="goal" checked /> Я знаю, что хочу построить</label>
-              <label><input type="radio" name="goal" /> Подобрать лучший вариант</label>
-            </fieldset>
+          <fieldset class="mode-switcher">
+            <legend>Режим</legend>
+            <label><input type="radio" name="mode" checked /> Хочу проверить объект</label>
+            <label><input type="radio" name="mode" /> Подобрать лучший вариант</label>
+          </fieldset>
+
+          <div class="form-grid">
+            <label>
+              Кадастровый номер
+              <input type="text" placeholder="Например, 77:01:0004012:3456" />
+            </label>
+            <label>
+              Адрес
+              <input type="text" placeholder="Город, улица, ориентир" />
+            </label>
+            <label>
+              Площадь
+              <input type="text" placeholder="1200 м²" />
+            </label>
+            <label>
+              Размеры участка, если известны
+              <input type="text" placeholder="40 × 30 м" />
+            </label>
+            <label>
+              Сторона подъезда
+              <select>
+                <option selected>Неизвестно</option>
+                <option>Север</option>
+                <option>Юг</option>
+                <option>Восток</option>
+                <option>Запад</option>
+              </select>
+            </label>
             <label>
               Что планируется построить
-              <textarea rows="4" placeholder="Например, индивидуальный жилой дом 2 этажа"></textarea>
+              <textarea rows="3" placeholder="Например, жилой дом с парковкой"></textarea>
             </label>
-          </section>
+          </div>
 
-          <section class="card">
+          <section>
             <h2>Документы</h2>
-            <div class="fields">
-              <label>ПЗЗ <input type="file" /></label>
-              <label>ГПЗУ <input type="file" /></label>
-              <label>ЕГРН <input type="file" /></label>
-              <label>Схема участка <input type="file" /></label>
-              <label>Дополнительные файлы <input type="file" multiple /></label>
+            <div class="doc-grid">
+              <label class="doc-card">ПЗЗ <input type="file" /></label>
+              <label class="doc-card">ГПЗУ <input type="file" /></label>
+              <label class="doc-card">ЕГРН <input type="file" /></label>
+              <label class="doc-card">Карта зонирования <input type="file" /></label>
+              <label class="doc-card">ЗОУИТ <input type="file" /></label>
+              <label class="doc-card">Схема участка <input type="file" /></label>
+              <label class="doc-card">Дополнительные файлы <input type="file" multiple /></label>
             </div>
-            <p class="hint">Здесь будет отображаться список выбранных файлов после подключения логики.</p>
+            <p class="hint">После подключения логики здесь будет отображаться список выбранных файлов.</p>
           </section>
 
-          <button class="primary" type="button">Сформировать предварительный анализ</button>
-        </div>
+          <button class="primary" type="button">Запустить анализ</button>
+        </section>
 
-        <div class="column">
-          <section class="card result">
-            <h2>Результат</h2>
-            <p class="status">Статус: <strong>Данных недостаточно</strong></p>
+        <section class="panel output-panel">
+          <div class="status-row">
+            <article class="card status-card">
+              <p class="eyebrow">Статус</p>
+              <h2>Данных недостаточно</h2>
+              <p>Для предварительного вывода не хватает обязательных документов и уточнений.</p>
+            </article>
+            <article class="card confidence-card">
+              <p class="eyebrow">Уровень уверенности</p>
+              <p class="confidence-value">25%</p>
+              <p class="confidence-label">Низкий</p>
+            </article>
+          </div>
 
+          <section class="facts-grid" aria-label="Карточки результатов">
+            <article class="card fact"><h3>Территориальная зона</h3><p>Не определена</p></article>
+            <article class="card fact"><h3>Текущий ВРИ</h3><p>Не подтверждён</p></article>
+            <article class="card fact"><h3>Допустимые ВРИ</h3><p>Требуется проверка ПЗЗ</p></article>
+            <article class="card fact"><h3>Ограничения</h3><p>Нет данных по ЗОУИТ</p></article>
+            <article class="card fact"><h3>Риски</h3><p>Повышенные до загрузки ГПЗУ</p></article>
+            <article class="card fact"><h3>Рекомендации</h3><p>Собрать базовый комплект документов</p></article>
+          </section>
+
+          <article class="card text-block">
             <h3>Краткий вывод</h3>
-            <p>Для предварительного вывода недостаточно обязательных документов и уточнений по участку.</p>
+            <p>Автоматизированный предварительный вывод невозможен без уточнения параметров участка и обязательных документов.</p>
+          </article>
 
-            <h3>Риски</h3>
-            <ul>
-              <li>Вид разрешённого использования не подтверждён документально.</li>
-              <li>Неизвестны действующие градостроительные ограничения по зоне.</li>
-            </ul>
-
-            <h3>Рекомендации</h3>
-            <ul>
-              <li>Загрузить ГПЗУ и актуальную выписку ЕГРН.</li>
-              <li>Уточнить точную площадь и геометрию участка.</li>
-            </ul>
-
+          <article class="card text-block">
             <h3>Что нужно дозагрузить</h3>
-            <p>ПЗЗ (фрагмент по территориальной зоне), ГПЗУ, схема участка с подъездом.</p>
+            <p>ГПЗУ, фрагмент ПЗЗ по зоне, актуальную выписку ЕГРН, схему участка с въездом и информацию по ограничениям.</p>
+          </article>
 
+          <article class="card text-block">
             <h3>Источники</h3>
-            <ul>
-              <li>Пользовательские данные формы (черновик).</li>
-              <li>Будущие загруженные документы: ПЗЗ / ГПЗУ / ЕГРН.</li>
-            </ul>
-          </section>
+            <p>Черновые данные формы, будущие документы ПЗЗ/ГПЗУ/ЕГРН, схема участка и карта зонирования.</p>
+          </article>
 
-          <section class="card">
-            <h2>2D-эскиз (предварительный)</h2>
-            <svg viewBox="0 0 520 320" role="img" aria-label="Схема участка">
-              <rect x="40" y="30" width="420" height="240" class="plot" />
-              <rect x="75" y="65" width="350" height="170" class="setback" />
-              <rect x="170" y="105" width="160" height="90" class="footprint" />
-              <rect x="200" y="125" width="100" height="50" class="building" />
-              <line x1="40" y1="280" x2="160" y2="280" class="driveway" />
-              <polygon points="160,280 147,272 147,288" class="arrow" />
+          <article class="card sketch-block">
+            <h3>Предварительный 2D-эскиз</h3>
+            <svg viewBox="0 0 640 420" role="img" aria-label="Предварительный 2D-эскиз участка">
+              <rect x="70" y="50" width="500" height="300" class="plot" />
+              <rect x="110" y="90" width="420" height="220" class="setback" />
+              <rect x="225" y="150" width="190" height="130" class="footprint" />
+              <rect x="255" y="175" width="130" height="80" class="building" />
+              <rect x="425" y="180" width="80" height="60" class="parking" />
+              <rect x="120" y="235" width="80" height="65" class="green" />
 
-              <text x="50" y="24">Граница участка</text>
-              <text x="80" y="58">Отступы</text>
-              <text x="176" y="98">Пятно застройки</text>
-              <text x="208" y="120">Объект</text>
-              <text x="48" y="298">Въезд</text>
+              <line x1="570" y1="300" x2="620" y2="300" class="road" />
+              <line x1="620" y1="300" x2="620" y2="355" class="road" />
+              <polygon points="568,300 578,294 578,306" class="arrow" />
+
+              <text x="76" y="42">Участок 40 м</text>
+              <text x="10" y="204" transform="rotate(-90 20 204)">Глубина 30 м</text>
+              <text x="118" y="83">Пунктирный отступ</text>
+              <text x="230" y="144">Пятно застройки</text>
+              <text x="260" y="170">Объект</text>
+              <text x="430" y="172">Парковка</text>
+              <text x="122" y="228">Зелёная зона</text>
+              <text x="548" y="291">Въезд</text>
+              <text x="578" y="372">Подъездная дорога</text>
             </svg>
-          </section>
-        </div>
+          </article>
+        </section>
       </section>
     </main>
   </body>
