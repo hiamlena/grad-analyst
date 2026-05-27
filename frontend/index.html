@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ГрадоАналитик — MVP прототип</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="card hero">
+        <h1>ГрадоАналитик</h1>
+        <p class="subtitle">Предварительный ИИ-анализ земельного участка</p>
+        <p class="warning">Не является юридическим заключением</p>
+      </header>
+
+      <section class="layout" aria-label="Форма анализа">
+        <div class="column">
+          <section class="card">
+            <h2>Данные участка</h2>
+            <div class="fields">
+              <label>
+                Кадастровый номер
+                <input type="text" placeholder="Например, 77:01:0004012:3456" />
+              </label>
+              <label>
+                Адрес
+                <input type="text" placeholder="Город, улица, дом/ориентир" />
+              </label>
+              <label>
+                Площадь участка, м²
+                <input type="number" min="0" step="1" placeholder="1200" />
+              </label>
+              <label>
+                Размеры участка, если известны
+                <input type="text" placeholder="40 × 30 м" />
+              </label>
+              <label>
+                Сторона подъезда
+                <select>
+                  <option>север</option>
+                  <option>юг</option>
+                  <option>восток</option>
+                  <option>запад</option>
+                  <option selected>неизвестно</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Цель анализа</h2>
+            <fieldset class="radio-group">
+              <legend>Выберите режим</legend>
+              <label><input type="radio" name="goal" checked /> Я знаю, что хочу построить</label>
+              <label><input type="radio" name="goal" /> Подобрать лучший вариант</label>
+            </fieldset>
+            <label>
+              Что планируется построить
+              <textarea rows="4" placeholder="Например, индивидуальный жилой дом 2 этажа"></textarea>
+            </label>
+          </section>
+
+          <section class="card">
+            <h2>Документы</h2>
+            <div class="fields">
+              <label>ПЗЗ <input type="file" /></label>
+              <label>ГПЗУ <input type="file" /></label>
+              <label>ЕГРН <input type="file" /></label>
+              <label>Схема участка <input type="file" /></label>
+              <label>Дополнительные файлы <input type="file" multiple /></label>
+            </div>
+            <p class="hint">Здесь будет отображаться список выбранных файлов после подключения логики.</p>
+          </section>
+
+          <button class="primary" type="button">Сформировать предварительный анализ</button>
+        </div>
+
+        <div class="column">
+          <section class="card result">
+            <h2>Результат</h2>
+            <p class="status">Статус: <strong>Данных недостаточно</strong></p>
+
+            <h3>Краткий вывод</h3>
+            <p>Для предварительного вывода недостаточно обязательных документов и уточнений по участку.</p>
+
+            <h3>Риски</h3>
+            <ul>
+              <li>Вид разрешённого использования не подтверждён документально.</li>
+              <li>Неизвестны действующие градостроительные ограничения по зоне.</li>
+            </ul>
+
+            <h3>Рекомендации</h3>
+            <ul>
+              <li>Загрузить ГПЗУ и актуальную выписку ЕГРН.</li>
+              <li>Уточнить точную площадь и геометрию участка.</li>
+            </ul>
+
+            <h3>Что нужно дозагрузить</h3>
+            <p>ПЗЗ (фрагмент по территориальной зоне), ГПЗУ, схема участка с подъездом.</p>
+
+            <h3>Источники</h3>
+            <ul>
+              <li>Пользовательские данные формы (черновик).</li>
+              <li>Будущие загруженные документы: ПЗЗ / ГПЗУ / ЕГРН.</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2>2D-эскиз (предварительный)</h2>
+            <svg viewBox="0 0 520 320" role="img" aria-label="Схема участка">
+              <rect x="40" y="30" width="420" height="240" class="plot" />
+              <rect x="75" y="65" width="350" height="170" class="setback" />
+              <rect x="170" y="105" width="160" height="90" class="footprint" />
+              <rect x="200" y="125" width="100" height="50" class="building" />
+              <line x1="40" y1="280" x2="160" y2="280" class="driveway" />
+              <polygon points="160,280 147,272 147,288" class="arrow" />
+
+              <text x="50" y="24">Граница участка</text>
+              <text x="80" y="58">Отступы</text>
+              <text x="176" y="98">Пятно застройки</text>
+              <text x="208" y="120">Объект</text>
+              <text x="48" y="298">Въезд</text>
+            </svg>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
