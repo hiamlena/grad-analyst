@@ -53,16 +53,13 @@ body {
 }
 
 .brand-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(140deg, #0f6f53, #33a77f);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  font-weight: 700;
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #0f6f53 0%, #33a77f 100%);
+  transform: rotate(45deg);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
 .brand {
@@ -179,8 +176,10 @@ textarea {
   padding: 12px;
   font-size: 0.95rem;
   color: #2a465e;
-  min-height: 124px;
+  min-height: 144px;
   align-content: start;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .doc-title {
@@ -195,21 +194,29 @@ textarea {
 }
 
 .doc-card input[type="file"] {
+  width: 100%;
+  min-width: 0;
   border: 1px solid #d4e2ed;
-  padding: 7px;
+  padding: 6px 7px;
   border-radius: 10px;
   background: #fff;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #3d5a70;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .doc-card input[type="file"]::file-selector-button {
   border: 0;
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin-right: 8px;
+  border-radius: 7px;
+  padding: 5px 9px;
+  margin-right: 7px;
   color: #fff;
   background: linear-gradient(90deg, #167d5e, #2b9b79);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
@@ -261,16 +268,28 @@ textarea {
   background: linear-gradient(180deg, #fff, #fbfdff);
 }
 
+.status-card h2 {
+  margin-bottom: 8px;
+  font-size: clamp(1.55rem, 1.5vw, 2rem);
+  line-height: 1.15;
+  color: #8f2c2c;
+}
+
 .confidence-card {
-  background: var(--soft-blue);
-  border-color: #cae0ff;
+  background: linear-gradient(180deg, #f5f9ff 0%, #edf4ff 100%);
+  border-color: #c3dafd;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 2px;
 }
 
 .confidence-value {
-  margin: 4px 0;
-  font-size: 2rem;
+  margin: 2px 0;
+  font-size: clamp(2rem, 2.4vw, 2.4rem);
   font-weight: 800;
   color: var(--blue);
+  line-height: 1;
 }
 
 .confidence-label {
@@ -297,6 +316,7 @@ textarea {
 
 .sketch-block svg {
   width: 100%;
+  max-height: 250px;
   height: auto;
   border-radius: 14px;
   border: 1px solid var(--line);
@@ -368,7 +388,8 @@ text {
   }
 }
 
-@media (min-width: 700px) {
+
+@media (min-width: 700px) and (max-width: 1179px) {
   .doc-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
