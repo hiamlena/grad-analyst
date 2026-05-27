@@ -9,10 +9,11 @@
   <body>
     <main class="page">
       <header class="topbar card">
-        <div>
+        <div class="brand-wrap">
+          <span class="brand-mark" aria-hidden="true">◩</span>
           <p class="brand">ГрадоАналитик</p>
-          <p class="brand-subtitle">ИИ-анализ земельного участка</p>
         </div>
+        <p class="brand-subtitle">ИИ-анализ земельного участка</p>
         <p class="legal-badge">Не является юридическим заключением</p>
       </header>
 
@@ -23,11 +24,10 @@
             Проверяем ПЗЗ, ГПЗУ, ЕГРН, ограничения и риски и формируем предварительный вывод по участку.
           </p>
 
-          <fieldset class="mode-switcher">
-            <legend>Режим</legend>
-            <label><input type="radio" name="mode" checked /> Хочу проверить объект</label>
-            <label><input type="radio" name="mode" /> Подобрать лучший вариант</label>
-          </fieldset>
+          <div class="mode-switcher" role="radiogroup" aria-label="Режим анализа">
+            <label class="mode-tile"><input type="radio" name="mode" checked /> Хочу проверить объект</label>
+            <label class="mode-tile"><input type="radio" name="mode" /> Подобрать лучший вариант</label>
+          </div>
 
           <div class="form-grid">
             <label>
@@ -65,13 +65,13 @@
           <section>
             <h2>Документы</h2>
             <div class="doc-grid">
-              <label class="doc-card">ПЗЗ <input type="file" /></label>
-              <label class="doc-card">ГПЗУ <input type="file" /></label>
-              <label class="doc-card">ЕГРН <input type="file" /></label>
-              <label class="doc-card">Карта зонирования <input type="file" /></label>
-              <label class="doc-card">ЗОУИТ <input type="file" /></label>
-              <label class="doc-card">Схема участка <input type="file" /></label>
-              <label class="doc-card">Дополнительные файлы <input type="file" multiple /></label>
+              <label class="doc-card"><span class="doc-title">ПЗЗ</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">ГПЗУ</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">ЕГРН</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">Карта зонирования</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">ЗОУИТ</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">Схема участка</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" /></label>
+              <label class="doc-card"><span class="doc-title">Дополнительные файлы</span><span class="doc-subtitle">PDF, JPG, PNG</span><input type="file" multiple /></label>
             </div>
             <p class="hint">После подключения логики здесь будет отображаться список выбранных файлов.</p>
           </section>
@@ -119,27 +119,29 @@
 
           <article class="card sketch-block">
             <h3>Предварительный 2D-эскиз</h3>
-            <svg viewBox="0 0 640 420" role="img" aria-label="Предварительный 2D-эскиз участка">
-              <rect x="70" y="50" width="500" height="300" class="plot" />
-              <rect x="110" y="90" width="420" height="220" class="setback" />
-              <rect x="225" y="150" width="190" height="130" class="footprint" />
-              <rect x="255" y="175" width="130" height="80" class="building" />
-              <rect x="425" y="180" width="80" height="60" class="parking" />
-              <rect x="120" y="235" width="80" height="65" class="green" />
+            <svg viewBox="0 0 760 320" role="img" aria-label="Предварительный 2D-эскиз участка">
+              <rect x="60" y="40" width="640" height="220" class="plot" />
+              <rect x="90" y="65" width="580" height="170" class="setback" />
+              <rect x="325" y="92" width="190" height="125" class="building" />
+              <rect x="170" y="110" width="130" height="96" class="parking" />
+              <rect x="525" y="92" width="130" height="125" class="green" />
+              <rect x="122" y="216" width="420" height="20" class="road" />
 
-              <line x1="570" y1="300" x2="620" y2="300" class="road" />
-              <line x1="620" y1="300" x2="620" y2="355" class="road" />
-              <polygon points="568,300 578,294 578,306" class="arrow" />
+              <line x1="60" y1="268" x2="700" y2="268" class="dimline" />
+              <line x1="60" y1="260" x2="60" y2="278" class="dimline" />
+              <line x1="700" y1="260" x2="700" y2="278" class="dimline" />
+              <text x="350" y="286">40,0 м</text>
 
-              <text x="76" y="42">Участок 40 м</text>
-              <text x="10" y="204" transform="rotate(-90 20 204)">Глубина 30 м</text>
-              <text x="118" y="83">Пунктирный отступ</text>
-              <text x="230" y="144">Пятно застройки</text>
-              <text x="260" y="170">Объект</text>
-              <text x="430" y="172">Парковка</text>
-              <text x="122" y="228">Зелёная зона</text>
-              <text x="548" y="291">Въезд</text>
-              <text x="578" y="372">Подъездная дорога</text>
+              <line x1="30" y1="40" x2="30" y2="260" class="dimline" />
+              <line x1="22" y1="40" x2="38" y2="40" class="dimline" />
+              <line x1="22" y1="260" x2="38" y2="260" class="dimline" />
+              <text x="16" y="152" transform="rotate(-90 16 152)">30,0 м</text>
+
+              <text x="350" y="160">Объект</text>
+              <text x="200" y="162">Парковка</text>
+              <text x="565" y="160">Зелёная зона</text>
+              <text x="140" y="230">Подъезд / дорога</text>
+              <text x="96" y="58">Граница участка</text>
             </svg>
           </article>
         </section>
