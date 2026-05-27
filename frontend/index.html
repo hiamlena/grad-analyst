@@ -11,8 +11,21 @@
       <header class="card hero">
         <h1>ГрадоАналитик</h1>
         <p class="subtitle">Предварительный ИИ-анализ земельного участка</p>
+        <p class="description">
+          Загрузите документы по участку и получите предварительный вывод: можно строить, нельзя, возможно при
+          условиях или данных недостаточно.
+        </p>
         <p class="warning">Не является юридическим заключением</p>
       </header>
+
+      <section class="card steps" aria-label="Этапы работы">
+        <h2>Как это работает</h2>
+        <ol>
+          <li><span class="step-index">1</span>Введите участок</li>
+          <li><span class="step-index">2</span>Загрузите документы</li>
+          <li><span class="step-index">3</span>Получите отчёт и 2D-эскиз</li>
+        </ol>
+      </section>
 
       <section class="layout" aria-label="Форма анализа">
         <div class="column">
@@ -61,14 +74,35 @@
             </label>
           </section>
 
-          <section class="card">
+          <section class="card documents">
             <h2>Документы</h2>
+            <p class="hint top-hint">Загрузите документы в первую очередь из списка ниже — это улучшит точность предварительного вывода.</p>
             <div class="fields">
-              <label>ПЗЗ <input type="file" /></label>
-              <label>ГПЗУ <input type="file" /></label>
-              <label>ЕГРН <input type="file" /></label>
-              <label>Схема участка <input type="file" /></label>
-              <label>Дополнительные файлы <input type="file" multiple /></label>
+              <label class="doc-item required">
+                <span class="doc-title">ПЗЗ <span class="tag required-tag">обязательно</span></span>
+                <input type="file" />
+                <span class="field-hint">Фрагмент по территориальной зоне и регламентам участка.</span>
+              </label>
+              <label class="doc-item required">
+                <span class="doc-title">ГПЗУ <span class="tag required-tag">обязательно</span></span>
+                <input type="file" />
+                <span class="field-hint">Основные параметры застройки и ограничения для проекта.</span>
+              </label>
+              <label class="doc-item recommended">
+                <span class="doc-title">ЕГРН <span class="tag recommended-tag">желательно</span></span>
+                <input type="file" />
+                <span class="field-hint">Актуальная выписка с данными о правах и характеристиках участка.</span>
+              </label>
+              <label>
+                Схема участка
+                <input type="file" />
+                <span class="field-hint">Подойдёт схема с габаритами и обозначенным подъездом.</span>
+              </label>
+              <label>
+                Дополнительные файлы
+                <input type="file" multiple />
+                <span class="field-hint">Можно приложить PDF, изображения или архив с материалами.</span>
+              </label>
             </div>
             <p class="hint">Здесь будет отображаться список выбранных файлов после подключения логики.</p>
           </section>
@@ -79,49 +113,63 @@
         <div class="column">
           <section class="card result">
             <h2>Результат</h2>
-            <p class="status">Статус: <strong>Данных недостаточно</strong></p>
+            <p class="status-badge">Данных недостаточно</p>
+            <p class="demo-note">Демонстрационный результат: для реального вывода нужны официальные документы.</p>
 
-            <h3>Краткий вывод</h3>
-            <p>Для предварительного вывода недостаточно обязательных документов и уточнений по участку.</p>
+            <section class="result-block">
+              <h3>Краткий вывод</h3>
+              <p>Для предварительного вывода недостаточно обязательных документов и уточнений по участку.</p>
+            </section>
 
-            <h3>Риски</h3>
-            <ul>
-              <li>Вид разрешённого использования не подтверждён документально.</li>
-              <li>Неизвестны действующие градостроительные ограничения по зоне.</li>
-            </ul>
+            <section class="result-block">
+              <h3>Риски</h3>
+              <ul>
+                <li>Вид разрешённого использования не подтверждён документально.</li>
+                <li>Неизвестны действующие градостроительные ограничения по зоне.</li>
+              </ul>
+            </section>
 
-            <h3>Рекомендации</h3>
-            <ul>
-              <li>Загрузить ГПЗУ и актуальную выписку ЕГРН.</li>
-              <li>Уточнить точную площадь и геометрию участка.</li>
-            </ul>
+            <section class="result-block">
+              <h3>Рекомендации</h3>
+              <ul>
+                <li>Загрузить ГПЗУ и актуальную выписку ЕГРН.</li>
+                <li>Уточнить точную площадь и геометрию участка.</li>
+              </ul>
+            </section>
 
-            <h3>Что нужно дозагрузить</h3>
-            <p>ПЗЗ (фрагмент по территориальной зоне), ГПЗУ, схема участка с подъездом.</p>
+            <section class="result-block">
+              <h3>Что нужно дозагрузить</h3>
+              <p>ПЗЗ (фрагмент по территориальной зоне), ГПЗУ, схема участка с подъездом.</p>
+            </section>
 
-            <h3>Источники</h3>
-            <ul>
-              <li>Пользовательские данные формы (черновик).</li>
-              <li>Будущие загруженные документы: ПЗЗ / ГПЗУ / ЕГРН.</li>
-            </ul>
+            <section class="result-block">
+              <h3>Источники</h3>
+              <ul>
+                <li>Пользовательские данные формы (черновик).</li>
+                <li>Будущие загруженные документы: ПЗЗ / ГПЗУ / ЕГРН.</li>
+              </ul>
+            </section>
           </section>
 
-          <section class="card">
+          <section class="card sketch-card">
             <h2>2D-эскиз (предварительный)</h2>
-            <svg viewBox="0 0 520 320" role="img" aria-label="Схема участка">
-              <rect x="40" y="30" width="420" height="240" class="plot" />
-              <rect x="75" y="65" width="350" height="170" class="setback" />
-              <rect x="170" y="105" width="160" height="90" class="footprint" />
-              <rect x="200" y="125" width="100" height="50" class="building" />
-              <line x1="40" y1="280" x2="160" y2="280" class="driveway" />
-              <polygon points="160,280 147,272 147,288" class="arrow" />
-
-              <text x="50" y="24">Граница участка</text>
-              <text x="80" y="58">Отступы</text>
-              <text x="176" y="98">Пятно застройки</text>
-              <text x="208" y="120">Объект</text>
-              <text x="48" y="298">Въезд</text>
-            </svg>
+            <div class="sketch-wrap">
+              <svg viewBox="0 0 520 320" role="img" aria-label="Схема участка">
+                <rect x="40" y="30" width="420" height="240" class="plot" />
+                <rect x="75" y="65" width="350" height="170" class="setback" />
+                <rect x="170" y="105" width="160" height="90" class="footprint" />
+                <rect x="200" y="125" width="100" height="50" class="building" />
+                <line x1="40" y1="280" x2="160" y2="280" class="driveway" />
+                <polygon points="160,280 147,272 147,288" class="arrow" />
+              </svg>
+            </div>
+            <ul class="legend" aria-label="Легенда эскиза">
+              <li><span class="legend-chip plot-chip"></span>Граница участка</li>
+              <li><span class="legend-chip setback-chip"></span>Отступы</li>
+              <li><span class="legend-chip footprint-chip"></span>Пятно застройки</li>
+              <li><span class="legend-chip building-chip"></span>Объект</li>
+              <li><span class="legend-chip driveway-chip"></span>Въезд</li>
+            </ul>
           </section>
         </div>
       </section>
