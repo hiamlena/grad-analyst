@@ -1,34 +1,44 @@
-const documents = ["ПЗЗ", "ГПЗУ", "ЕГРН", "ЗОУИТ", "Схема участка", "Топосъёмка", "СП", "СанПиН"];
-
-const serviceCards = [
-  {
-    title: "Собирает исходные данные",
-    text: "Кадастровый номер, адрес, площадь, размеры участка, подъезд и желаемый объект.",
-  },
-  {
-    title: "Работает с документами",
-    text: "На следующих этапах сервис будет извлекать текст из ПЗЗ, ГПЗУ, ЕГРН и других файлов.",
-  },
-  {
-    title: "Готовит вывод",
-    text: "Можно, нельзя, возможно при условиях или данных недостаточно — с рисками и рекомендациями.",
-  },
+const stats = [
+  { label: "Участков", value: "0", note: "можно создать первый" },
+  { label: "Активный ПЗЗ", value: "нет", note: "загрузить редакцию" },
+  { label: "Документов", value: "0", note: "ожидают загрузки" },
+  { label: "Отчётов", value: "0", note: "история будет здесь" },
 ];
 
-const steps = [
-  "Пользователь вводит участок и цель строительства.",
-  "Загружает документы по участку.",
-  "ИИ ищет релевантные фрагменты в документах.",
-  "Сервис формирует предварительный отчёт и 2D-эскиз.",
+const plotFields = ["Кадастровый номер", "Адрес", "Площадь", "Размеры участка", "Сторона подъезда", "Что планируется построить"];
+
+const plotDocs = [
+  { name: "ГПЗУ", status: "не загружен", action: "Загрузить" },
+  { name: "Выписка ЕГРН", status: "не загружена", action: "Загрузить" },
+  { name: "Сведения о ЗОУИТ", status: "не загружены", action: "Загрузить" },
+  { name: "Схема участка", status: "не загружена", action: "Загрузить" },
+  { name: "Топосъёмка", status: "не загружена", action: "Загрузить" },
 ];
 
-const results = [
-  "краткий вывод по участку",
-  "проверка желаемого объекта",
-  "риски и ограничения",
-  "рекомендации",
-  "список документов, которые нужно запросить",
-  "предварительный 2D-эскиз размещения объекта",
+const normDocs = [
+  { name: "ПЗЗ", version: "редакция не выбрана", state: "требуется загрузка" },
+  { name: "Градостроительный регламент", version: "нет активной версии", state: "требуется загрузка" },
+  { name: "Карта зонирования", version: "нет файла", state: "желательно загрузить" },
+  { name: "Местные нормативы", version: "нет файла", state: "по необходимости" },
+  { name: "СП / СанПиН", version: "нет набора", state: "по необходимости" },
+];
+
+const activeSources = [
+  "Активный ПЗЗ или градостроительный регламент",
+  "ГПЗУ по конкретному участку",
+  "Выписка ЕГРН",
+  "Сведения о ЗОУИТ, если есть",
+  "Схема участка или топосъёмка",
+];
+
+const reportItems = [
+  "краткий вывод: можно / нельзя / возможно при условиях / данных недостаточно",
+  "территориальная зона и ВРИ",
+  "параметры застройки и ограничения",
+  "риски и рекомендации",
+  "что запросить дальше",
+  "источники и фрагменты документов",
+  "предварительный 2D-эскиз размещения",
 ];
 
 export default function Home() {
@@ -40,10 +50,10 @@ export default function Home() {
             ГрадоАналитик
           </a>
           <nav className="nav" aria-label="Основная навигация">
-            <a href="#service">О сервисе</a>
-            <a href="#process">Как работает</a>
+            <a href="#workspace">Кабинет</a>
             <a href="#documents">Документы</a>
-            <a href="#request">Заявка</a>
+            <a href="#analysis">Анализ</a>
+            <a href="#reports">Отчёты</a>
           </nav>
         </div>
       </header>
@@ -51,161 +61,196 @@ export default function Home() {
       <section id="top" className="hero">
         <div className="container hero-grid">
           <div className="hero-content">
-            <span className="eyebrow">MVP · Краснодарский край · предпроектная оценка</span>
-            <h1>ИИ-анализ земельного участка перед строительством</h1>
+            <span className="eyebrow">Закрытый кабинет · один пользователь · демо MVP</span>
+            <h1>Личный инструмент анализа земельных участков</h1>
             <p>
-              Сервис помогает быстро понять, что можно разместить на участке, какие есть
-              ограничения, какие документы нужны и какие риски стоит проверить до проекта.
+              Рабочий кабинет для одного заказчика: создание участков, загрузка документов,
+              хранение версий ПЗЗ, запуск предварительного анализа и сохранение отчётов.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#request">Оставить заявку</a>
-              <a className="button secondary" href="#results">Что получит пользователь</a>
+              <a className="button primary" href="#analysis">Новый анализ участка</a>
+              <a className="button secondary" href="#documents">Библиотека документов</a>
             </div>
           </div>
 
-          <aside className="summary-card" aria-label="Пример результата анализа">
-            <p className="card-label">Пример вывода</p>
-            <h2>Возможно при условиях</h2>
-            <ul>
-              <li>Нужна проверка территориальной зоны.</li>
-              <li>Требуется ГПЗУ и сведения о ЗОУИТ.</li>
-              <li>Предварительно возможен объект малой коммерции.</li>
-            </ul>
+          <aside className="summary-card dashboard-card" aria-label="Статус рабочего кабинета">
+            <p className="card-label">Статус базы</p>
+            <h2>Демо-режим</h2>
+            <div className="status-list">
+              {stats.map((item) => (
+                <div className="status-row" key={item.label}>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                  <small>{item.note}</small>
+                </div>
+              ))}
+            </div>
           </aside>
         </div>
       </section>
 
-      <section id="service" className="section">
+      <section id="workspace" className="section">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">Что делает сервис</span>
-            <h2>Понятный предварительный анализ вместо хаоса в документах</h2>
+            <span className="eyebrow">Рабочая панель</span>
+            <h2>Не лендинг, а кабинет для постоянной работы</h2>
+            <p>
+              Здесь заказчик ведёт участки, обновляет документы и запускает анализ по актуальным
+              источникам. Публичная версия используется только как прототип интерфейса.
+            </p>
           </div>
-          <div className="cards-grid">
-            {serviceCards.map((card) => (
-              <article className="info-card" key={card.title}>
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
-            ))}
+
+          <div className="cards-grid workspace-grid">
+            <article className="info-card feature-card">
+              <h3>Участки</h3>
+              <p>Карточки земельных участков с кадастровым номером, адресом, площадью и целью строительства.</p>
+            </article>
+            <article className="info-card feature-card">
+              <h3>Документы</h3>
+              <p>ПЗЗ, ГПЗУ, ЕГРН, ЗОУИТ, схемы и топосъёмка с загрузкой новых версий.</p>
+            </article>
+            <article className="info-card feature-card">
+              <h3>Отчёты</h3>
+              <p>История предварительных выводов, рисков, рекомендаций, источников и 2D-эскизов.</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="process" className="section muted-section">
-        <div className="container split-section">
+      <section id="analysis" className="section muted-section">
+        <div className="container app-grid">
           <div>
-            <span className="eyebrow">Как это работает</span>
-            <h2>Сначала MVP без лишней тяжёлой инфраструктуры</h2>
+            <span className="eyebrow">Новый анализ</span>
+            <h2>Карточка участка</h2>
             <p className="section-text">
-              На первом этапе не подключаем Росреестр, карту всего края и сложную GIS-систему.
-              Пользователь сам вводит данные и загружает документы.
+              Первый рабочий сценарий: ввести участок, выбрать режим анализа, подключить активные документы и запустить проверку.
             </p>
           </div>
-          <ol className="steps-list">
-            {steps.map((step, index) => (
-              <li key={step}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {step}
-              </li>
+
+          <form className="request-form app-form">
+            {plotFields.map((field) => (
+              <label key={field}>
+                {field}
+                <input type="text" placeholder={field === "Кадастровый номер" ? "23:00:0000000:000" : "Заполнить"} />
+              </label>
             ))}
-          </ol>
+            <label>
+              Режим анализа
+              <select defaultValue="object">
+                <option value="object">Я знаю, что хочу построить</option>
+                <option value="best">Подобрать лучший вариант</option>
+              </select>
+            </label>
+            <button type="button">Запустить предварительный анализ</button>
+          </form>
         </div>
       </section>
 
       <section id="documents" className="section">
         <div className="container">
           <div className="section-head narrow">
-            <span className="eyebrow">Документы</span>
-            <h2>Что пользователь сможет загрузить для анализа</h2>
+            <span className="eyebrow">Библиотека документов</span>
+            <h2>Документы можно обновлять постоянно</h2>
             <p>
-              Если нужных данных нет, сервис должен прямо писать: «Данных недостаточно» и
-              перечислять, что нужно запросить.
+              Если ПЗЗ обновился — загружается новая версия. Старая остаётся в архиве, а для следующего анализа используется активная редакция.
             </p>
           </div>
-          <div className="document-tags">
-            {documents.map((document) => (
-              <span key={document}>{document}</span>
+
+          <div className="two-columns">
+            <div className="table-card">
+              <h3>Документы участка</h3>
+              {plotDocs.map((doc) => (
+                <div className="doc-row" key={doc.name}>
+                  <div>
+                    <strong>{doc.name}</strong>
+                    <span>{doc.status}</span>
+                  </div>
+                  <button type="button">{doc.action}</button>
+                </div>
+              ))}
+            </div>
+
+            <div className="table-card">
+              <h3>Нормативная база</h3>
+              {normDocs.map((doc) => (
+                <div className="doc-row" key={doc.name}>
+                  <div>
+                    <strong>{doc.name}</strong>
+                    <span>{doc.version}</span>
+                  </div>
+                  <small>{doc.state}</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="version-card">
+            <div>
+              <span className="eyebrow">Версии</span>
+              <h3>Пример логики для ПЗЗ</h3>
+              <p>ПЗЗ редакция 2025 — архив · ПЗЗ редакция 2026 — активная · следующий анализ берёт только активную версию.</p>
+            </div>
+            <button type="button">Добавить новую версию ПЗЗ</button>
+          </div>
+        </div>
+      </section>
+
+      <section className="section dark-section">
+        <div className="container results-grid">
+          <div>
+            <span className="eyebrow light">Активные источники</span>
+            <h2>ИИ анализирует не «из головы», а по выбранным документам</h2>
+            <p>
+              Перед запуском система собирает активные источники. Если нужного документа нет, отчёт обязан написать: данных недостаточно.
+            </p>
+          </div>
+          <div className="result-panel">
+            {activeSources.map((source) => (
+              <div className="result-item" key={source}>✓ {source}</div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="results" className="section dark-section">
-        <div className="container results-grid">
+      <section id="reports" className="section">
+        <div className="container report-layout">
           <div>
-            <span className="eyebrow light">Результат</span>
-            <h2>Структурированный отчёт без юридических обещаний</h2>
-            <p>
-              Пользователь получает не фантазию «из головы», а предварительную аналитику с
-              опорой на загруженные документы и найденные фрагменты.
-            </p>
+            <span className="eyebrow">Отчёт</span>
+            <h2>Что получит единственный пользователь</h2>
+            <div className="result-panel light-panel">
+              {reportItems.map((item) => (
+                <div className="result-item" key={item}>✓ {item}</div>
+              ))}
+            </div>
           </div>
-          <div className="result-panel">
-            {results.map((result) => (
-              <div className="result-item" key={result}>✓ {result}</div>
-            ))}
+
+          <div className="sketch-card">
+            <h3>Предварительный 2D-эскиз</h3>
+            <div className="plot-sketch">
+              <span className="plot-label">участок</span>
+              <div className="building">объект</div>
+              <div className="parking">парковка</div>
+              <div className="entry">въезд</div>
+            </div>
+            <p>Пока это визуальная заглушка. Позже схема будет строиться из layout_json.</p>
           </div>
         </div>
       </section>
 
       <section className="section warning-section">
         <div className="container warning-box">
-          <span className="eyebrow">Юридическое ограничение</span>
-          <h2>Это не официальное заключение</h2>
+          <span className="eyebrow">Ограничение демо</span>
+          <h2>Не загружать реальные документы в публичную демо-версию</h2>
           <p>
-            Сервис не является органом власти, ГПЗУ, разрешением на строительство, проектной
-            документацией или юридическим заключением. Это предварительный аналитический
-            помощник для предпроектной оценки участка.
+            GitHub Pages используется только для показа интерфейса. Для настоящих ГПЗУ, ЕГРН и ПЗЗ нужен закрытый сервер, авторизация и backend-хранилище.
           </p>
-        </div>
-      </section>
-
-      <section id="request" className="section request-section">
-        <div className="container request-grid">
-          <div>
-            <span className="eyebrow">Заявка</span>
-            <h2>Оставьте данные участка для предварительной оценки</h2>
-            <p>
-              Сейчас это визуальный макет формы. На следующем этапе подключим сохранение заявки
-              или отправку в Telegram/email.
-            </p>
-          </div>
-
-          <form className="request-form">
-            <label>
-              Имя
-              <input type="text" placeholder="Елена" />
-            </label>
-            <label>
-              Телефон
-              <input type="tel" placeholder="+7 900 000-00-00" />
-            </label>
-            <label>
-              Кадастровый номер
-              <input type="text" placeholder="23:00:0000000:000" />
-            </label>
-            <label>
-              Адрес участка
-              <input type="text" placeholder="Краснодарский край, ..." />
-            </label>
-            <label>
-              Площадь участка
-              <input type="text" placeholder="Например: 12 соток" />
-            </label>
-            <label>
-              Что хотите построить
-              <textarea placeholder="Например: магазин, склад, дом, автомойка" />
-            </label>
-            <button type="button">Оставить заявку</button>
-          </form>
         </div>
       </section>
 
       <footer className="footer">
         <div className="container footer-inner">
           <strong>ГрадоАналитик</strong>
-          <span>© 2026 · MVP предпроектного анализа земельных участков</span>
+          <span>© 2026 · закрытый MVP для одного пользователя</span>
         </div>
       </footer>
     </main>
