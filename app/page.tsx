@@ -172,12 +172,7 @@ export default function Home() {
             </p>
           </div>
 
-          <form
-            className="request-form"
-            onSubmit={(event) => {
-              event.preventDefault();
-            }}
-          >
+          <form className="request-form">
             <label>
               Имя
               <input type="text" placeholder="Елена" />
@@ -202,7 +197,7 @@ export default function Home() {
               Что хотите построить
               <textarea placeholder="Например: магазин, склад, дом, автомойка" />
             </label>
-            <button type="submit">Оставить заявку</button>
+            <button type="button">Оставить заявку</button>
           </form>
         </div>
       </section>
