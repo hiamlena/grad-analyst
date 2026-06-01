@@ -61,6 +61,12 @@
   box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.16);
 }
 
+.form-note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .table-card,
 .version-card,
 .sketch-card {
@@ -69,6 +75,19 @@
   padding: 28px;
   background: #ffffff;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+}
+
+.stage-card {
+  min-height: 100%;
+}
+
+.stage-card h2 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+
+.accent-stage {
+  border-color: rgba(29, 78, 216, 0.28);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 
 .table-card h3,
@@ -113,6 +132,11 @@
   color: var(--blue);
   cursor: pointer;
   font-weight: 800;
+}
+
+.mock-button {
+  background: #eef2ff !important;
+  color: #334155 !important;
 }
 
 .version-card {
