@@ -5,14 +5,29 @@ const stats = [
   { label: "Отчётов", value: "0", note: "история будет здесь" },
 ];
 
+const currentFeatures = [
+  "готов интерфейс закрытого кабинета",
+  "показана логика участков и документов",
+  "показана версия ПЗЗ: архив / активная редакция",
+  "показана структура отчёта и 2D-эскиза",
+];
+
+const nextFeatures = [
+  "авторизация для одного пользователя",
+  "реальная загрузка PDF/DOCX/JPG/PNG",
+  "извлечение текста из документов",
+  "ИИ-анализ по активным источникам",
+  "сохранение отчётов и истории анализов",
+];
+
 const plotFields = ["Кадастровый номер", "Адрес", "Площадь", "Размеры участка", "Сторона подъезда", "Что планируется построить"];
 
 const plotDocs = [
-  { name: "ГПЗУ", status: "не загружен", action: "Загрузить" },
-  { name: "Выписка ЕГРН", status: "не загружена", action: "Загрузить" },
-  { name: "Сведения о ЗОУИТ", status: "не загружены", action: "Загрузить" },
-  { name: "Схема участка", status: "не загружена", action: "Загрузить" },
-  { name: "Топосъёмка", status: "не загружена", action: "Загрузить" },
+  { name: "ГПЗУ", status: "не загружен", action: "Макет загрузки" },
+  { name: "Выписка ЕГРН", status: "не загружена", action: "Макет загрузки" },
+  { name: "Сведения о ЗОУИТ", status: "не загружены", action: "Макет загрузки" },
+  { name: "Схема участка", status: "не загружена", action: "Макет загрузки" },
+  { name: "Топосъёмка", status: "не загружена", action: "Макет загрузки" },
 ];
 
 const normDocs = [
@@ -51,6 +66,7 @@ export default function Home() {
           </a>
           <nav className="nav" aria-label="Основная навигация">
             <a href="#workspace">Кабинет</a>
+            <a href="#roadmap">Этапы</a>
             <a href="#documents">Документы</a>
             <a href="#analysis">Анализ</a>
             <a href="#reports">Отчёты</a>
@@ -61,21 +77,21 @@ export default function Home() {
       <section id="top" className="hero">
         <div className="container hero-grid">
           <div className="hero-content">
-            <span className="eyebrow">Закрытый кабинет · один пользователь · демо MVP</span>
-            <h1>Личный инструмент анализа земельных участков</h1>
+            <span className="eyebrow">Закрытый кабинет · один пользователь · MVP-прототип</span>
+            <h1>Закрытый кабинет для предпроектного анализа участков</h1>
             <p>
-              Рабочий кабинет для одного заказчика: создание участков, загрузка документов,
+              Рабочий инструмент для одного заказчика: создание участков, загрузка документов,
               хранение версий ПЗЗ, запуск предварительного анализа и сохранение отчётов.
             </p>
             <div className="hero-actions">
               <a className="button primary" href="#analysis">Новый анализ участка</a>
-              <a className="button secondary" href="#documents">Библиотека документов</a>
+              <a className="button secondary" href="#roadmap">Что уже готово</a>
             </div>
           </div>
 
           <aside className="summary-card dashboard-card" aria-label="Статус рабочего кабинета">
-            <p className="card-label">Статус базы</p>
-            <h2>Демо-режим</h2>
+            <p className="card-label">Статус кабинета</p>
+            <h2>MVP-прототип</h2>
             <div className="status-list">
               {stats.map((item) => (
                 <div className="status-row" key={item.label}>
@@ -117,7 +133,31 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="analysis" className="section muted-section">
+      <section id="roadmap" className="section muted-section">
+        <div className="container two-columns">
+          <div className="table-card stage-card">
+            <span className="eyebrow">Текущая версия</span>
+            <h2>Что уже показано в прототипе</h2>
+            <div className="result-panel light-panel">
+              {currentFeatures.map((feature) => (
+                <div className="result-item" key={feature}>✓ {feature}</div>
+              ))}
+            </div>
+          </div>
+
+          <div className="table-card stage-card accent-stage">
+            <span className="eyebrow">Следующий этап</span>
+            <h2>Что подключается после согласования</h2>
+            <div className="result-panel light-panel">
+              {nextFeatures.map((feature) => (
+                <div className="result-item" key={feature}>→ {feature}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="analysis" className="section">
         <div className="container app-grid">
           <div>
             <span className="eyebrow">Новый анализ</span>
@@ -142,11 +182,12 @@ export default function Home() {
               </select>
             </label>
             <button type="button">Запустить предварительный анализ</button>
+            <small className="form-note">Пока кнопка показывает будущий сценарий. Реальный запуск анализа подключается на backend-этапе.</small>
           </form>
         </div>
       </section>
 
-      <section id="documents" className="section">
+      <section id="documents" className="section muted-section">
         <div className="container">
           <div className="section-head narrow">
             <span className="eyebrow">Библиотека документов</span>
@@ -165,7 +206,7 @@ export default function Home() {
                     <strong>{doc.name}</strong>
                     <span>{doc.status}</span>
                   </div>
-                  <button type="button">{doc.action}</button>
+                  <button type="button" className="mock-button">{doc.action}</button>
                 </div>
               ))}
             </div>
@@ -190,7 +231,7 @@ export default function Home() {
               <h3>Пример логики для ПЗЗ</h3>
               <p>ПЗЗ редакция 2025 — архив · ПЗЗ редакция 2026 — активная · следующий анализ берёт только активную версию.</p>
             </div>
-            <button type="button">Добавить новую версию ПЗЗ</button>
+            <button type="button" className="mock-button">Макет добавления новой версии</button>
           </div>
         </div>
       </section>
@@ -239,8 +280,8 @@ export default function Home() {
 
       <section className="section warning-section">
         <div className="container warning-box">
-          <span className="eyebrow">Ограничение демо</span>
-          <h2>Не загружать реальные документы в публичную демо-версию</h2>
+          <span className="eyebrow">Ограничение публичного прототипа</span>
+          <h2>Не загружать реальные документы в публичную MVP-страницу</h2>
           <p>
             GitHub Pages используется только для показа интерфейса. Для настоящих ГПЗУ, ЕГРН и ПЗЗ нужен закрытый сервер, авторизация и backend-хранилище.
           </p>
