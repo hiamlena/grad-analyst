@@ -14,6 +14,10 @@
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.03);
 }
 
+.svg-board {
+  background: #ffffff;
+}
+
 .board-toolbar {
   display: flex;
   align-items: center;
@@ -37,223 +41,81 @@
   font-size: 13px;
 }
 
-.site-plan {
-  position: relative;
-  height: 320px;
-  margin: 14px;
-  overflow: hidden;
-  border: 2px solid #1e3a8a;
-  border-radius: 22px;
-  background:
-    linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
-    linear-gradient(135deg, #ffffff 0%, #f8fbff 58%, #eef7ff 100%);
-  background-size: 22px 22px;
-  color: #0f172a;
+.plan-svg {
+  display: block;
+  width: calc(100% - 24px);
+  height: auto;
+  margin: 12px;
+  overflow: visible;
 }
 
-.site-plan::before {
-  content: "";
-  position: absolute;
-  inset: 30px;
-  border: 1px dashed rgba(30, 58, 138, 0.42);
-  border-radius: 18px;
-  pointer-events: none;
-}
-
-.north-arrow {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  display: inline-flex;
-  width: 34px;
-  height: 34px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  background: #0b1f49;
-  color: #ffffff;
-  font-size: 12px;
+.svg-road,
+.svg-entry,
+.svg-building-title,
+.svg-parking-title,
+.svg-tech,
+.svg-green,
+.svg-dimension,
+.svg-setback,
+.svg-north {
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-weight: 950;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-}
-
-.dimension {
-  position: absolute;
-  display: inline-flex;
-  border-radius: 999px;
-  padding: 5px 9px;
-  background: rgba(255, 255, 255, 0.94);
-  color: #1e3a8a;
-  font-size: 11px;
-  font-weight: 950;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
-}
-
-.dimension-top {
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.dimension-left {
-  top: 50%;
-  left: 8px;
-  transform: translateY(-50%) rotate(-90deg);
-}
-
-.setback-line {
-  position: absolute;
-  top: 38px;
-  left: 44px;
-  border-radius: 999px;
-  padding: 6px 9px;
-  background: rgba(219, 234, 254, 0.92);
-  color: #1d4ed8;
-  font-size: 10px;
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.road-zone {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-  background:
-    repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.16) 0 12px, rgba(15, 23, 42, 0.06) 12px 24px),
-    #dbe3ee;
-  color: #334155;
-  font-size: 11px;
-  font-weight: 950;
-  text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-.entry-gate {
-  position: absolute;
-  left: 78px;
-  bottom: 38px;
-  z-index: 4;
-  width: 104px;
-  height: 38px;
-  border: 2px solid #f59e0b;
-  border-radius: 14px 14px 4px 4px;
-  background: #fff7ed;
-  color: #92400e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 950;
-  text-transform: uppercase;
+.svg-road {
+  fill: #334155;
+  font-size: 14px;
 }
 
-.main-building {
-  position: absolute;
-  top: 102px;
-  left: 132px;
-  z-index: 3;
-  display: grid;
-  width: 178px;
-  height: 106px;
-  place-items: center;
-  border: 1px solid rgba(120, 53, 15, 0.28);
-  border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent),
-    #d8a94f;
-  color: #1f2937;
-  box-shadow: 0 22px 45px rgba(120, 53, 15, 0.18);
+.svg-entry {
+  fill: #92400e;
+  font-size: 12px;
 }
 
-.main-building strong,
-.main-building span,
-.parking-zone strong,
-.parking-zone span {
-  display: block;
-  text-align: center;
-}
-
-.main-building strong {
-  align-self: end;
-  font-size: 16px;
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.main-building span {
-  align-self: start;
-  color: rgba(31, 41, 55, 0.76);
-  font-size: 11px;
-  font-weight: 900;
-}
-
-.parking-zone {
-  position: absolute;
-  right: 48px;
-  bottom: 82px;
-  z-index: 3;
-  display: grid;
-  width: 120px;
-  height: 72px;
-  place-items: center;
-  border: 1px dashed #1d4ed8;
-  border-radius: 16px;
-  background: rgba(96, 165, 250, 0.2);
-  color: #0f3d73;
-}
-
-.parking-zone strong {
-  align-self: end;
+.svg-building-title {
+  fill: #0f172a;
   font-size: 22px;
-  font-weight: 950;
 }
 
-.parking-zone span {
-  align-self: start;
-  font-size: 11px;
+.svg-building-note {
+  fill: #334155;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.svg-parking-title {
+  fill: #0f3d73;
+  font-size: 30px;
+}
+
+.svg-parking-note {
+  fill: #0f3d73;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   font-weight: 900;
 }
 
-.tech-zone,
-.green-zone {
-  position: absolute;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
+.svg-tech {
+  fill: #475569;
+  font-size: 13px;
+}
+
+.svg-green {
+  fill: #166534;
   font-size: 11px;
-  font-weight: 950;
-  text-transform: uppercase;
 }
 
-.tech-zone {
-  top: 78px;
-  right: 58px;
-  width: 108px;
-  height: 50px;
-  border: 1px solid rgba(71, 85, 105, 0.24);
-  background: rgba(226, 232, 240, 0.92);
-  color: #475569;
+.svg-dimension,
+.svg-setback {
+  fill: #1d4ed8;
+  font-size: 12px;
 }
 
-.green-zone {
-  left: 48px;
-  bottom: 104px;
-  width: 78px;
-  height: 82px;
-  background:
-    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.7) 0 4px, transparent 5px),
-    rgba(187, 247, 208, 0.88);
-  color: #166534;
+.svg-north {
+  fill: #ffffff;
+  font-size: 16px;
 }
 
 .plan-legend {
@@ -284,52 +146,17 @@
 .legend-tech { background: #cbd5e1; }
 .legend-green { background: #86efac; }
 
-@media (max-width: 900px) {
-  .site-plan {
-    height: 270px;
-    margin: 12px;
-    border-radius: 18px;
-    background-size: 18px 18px;
-  }
-
-  .site-plan::before {
-    inset: 24px;
-  }
-
-  .main-building {
-    top: 92px;
-    left: 88px;
-    width: 142px;
-    height: 84px;
-  }
-
-  .parking-zone {
-    right: 28px;
-    bottom: 72px;
-    width: 96px;
-    height: 58px;
-  }
-
-  .tech-zone {
-    top: 70px;
-    right: 34px;
-    width: 88px;
-    height: 42px;
-  }
-
-  .green-zone {
-    left: 34px;
-    bottom: 94px;
-    width: 60px;
-    height: 68px;
-  }
-
-  .entry-gate {
-    left: 52px;
-    bottom: 36px;
-    width: 84px;
-    height: 32px;
-  }
+.site-plan,
+.north-arrow,
+.dimension,
+.setback-line,
+.road-zone,
+.entry-gate,
+.main-building,
+.parking-zone,
+.tech-zone,
+.green-zone {
+  display: none;
 }
 
 @media (max-width: 520px) {
@@ -352,111 +179,44 @@
     font-size: 11px;
   }
 
-  .site-plan {
-    height: 210px;
-    margin: 8px;
-    border-width: 1px;
-    border-radius: 15px;
-    background-size: 14px 14px;
+  .plan-svg {
+    width: calc(100% - 12px);
+    margin: 6px;
   }
 
-  .site-plan::before {
-    inset: 17px;
-    border-radius: 11px;
-  }
-
-  .dimension-left {
-    display: none;
-  }
-
-  .dimension-top {
-    top: 7px;
-  }
-
-  .dimension {
-    padding: 4px 7px;
-    font-size: 9px;
-  }
-
-  .setback-line {
-    top: 25px;
-    left: 26px;
-    padding: 4px 7px;
-    font-size: 8px;
-  }
-
-  .north-arrow {
-    top: 7px;
-    right: 7px;
-    width: 25px;
-    height: 25px;
-    font-size: 10px;
-  }
-
-  .main-building {
-    top: 74px;
-    left: 64px;
-    width: 112px;
-    height: 62px;
-    border-radius: 13px;
-  }
-
-  .main-building strong {
+  .svg-road {
     font-size: 12px;
   }
 
-  .main-building span {
+  .svg-entry {
+    font-size: 10px;
+  }
+
+  .svg-building-title {
+    font-size: 18px;
+  }
+
+  .svg-building-note {
+    font-size: 11px;
+  }
+
+  .svg-parking-title {
+    font-size: 24px;
+  }
+
+  .svg-parking-note,
+  .svg-dimension,
+  .svg-setback {
+    font-size: 10px;
+  }
+
+  .svg-tech,
+  .svg-green {
     font-size: 9px;
   }
 
-  .parking-zone {
-    right: 16px;
-    bottom: 58px;
-    width: 72px;
-    height: 46px;
-    border-radius: 12px;
-  }
-
-  .parking-zone strong {
-    font-size: 17px;
-  }
-
-  .parking-zone span {
-    font-size: 9px;
-  }
-
-  .tech-zone {
-    top: 58px;
-    right: 18px;
-    width: 68px;
-    height: 32px;
-    border-radius: 12px;
-    font-size: 8px;
-  }
-
-  .green-zone {
-    left: 23px;
-    bottom: 77px;
-    width: 46px;
-    height: 50px;
-    border-radius: 12px;
-    font-size: 8px;
-  }
-
-  .entry-gate {
-    left: 35px;
-    bottom: 33px;
-    width: 62px;
-    height: 26px;
-    border-width: 1px;
-    border-radius: 10px 10px 3px 3px;
-    font-size: 8px;
-  }
-
-  .road-zone {
-    height: 34px;
-    font-size: 8px;
-    letter-spacing: 0.06em;
+  .svg-north {
+    font-size: 13px;
   }
 
   .plan-legend {
