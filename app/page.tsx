@@ -7,19 +7,19 @@ type Screen = "dashboard" | "plot" | "documents" | "report";
 const demoLogin = "demo";
 const demoPassword = "demo123";
 
-const steps: { key: Screen; label: string; caption: string }[] = [
-  { key: "dashboard", label: "Кабинет", caption: "обзор" },
-  { key: "plot", label: "Участок", caption: "данные" },
-  { key: "documents", label: "Документы", caption: "комплект" },
-  { key: "report", label: "Отчёт", caption: "вывод" },
+const navItems: { key: Screen; label: string }[] = [
+  { key: "dashboard", label: "Обзор" },
+  { key: "plot", label: "Участок" },
+  { key: "documents", label: "Документы" },
+  { key: "report", label: "Отчёт" },
 ];
 
 const docs = [
-  { name: "ГПЗУ", status: "загружен демо-файл", loaded: true, note: "ключевой документ для параметров застройки" },
-  { name: "Выписка ЕГРН", status: "загружен демо-файл", loaded: true, note: "площадь, категория, ВРИ, право" },
-  { name: "Схема участка", status: "загружен демо-файл", loaded: true, note: "форма участка, подъезд, размещение объекта" },
-  { name: "ПЗЗ / градостроительный регламент", status: "требуется", loaded: false, note: "без него нельзя уверенно подтвердить зону" },
-  { name: "Сведения о ЗОУИТ", status: "если есть", loaded: false, note: "санитарные, охранные и иные ограничения" },
+  { name: "ГПЗУ", status: "загружен", loaded: true, note: "параметры застройки" },
+  { name: "Выписка ЕГРН", status: "загружен", loaded: true, note: "площадь, ВРИ, право" },
+  { name: "Схема участка", status: "загружен", loaded: true, note: "форма, подъезд, размещение" },
+  { name: "ПЗЗ / регламент", status: "нужен", loaded: false, note: "для проверки зоны" },
+  { name: "ЗОУИТ", status: "нужен при наличии", loaded: false, note: "ограничения и охранные зоны" },
 ];
 
 const riskItems = [
@@ -30,9 +30,9 @@ const riskItems = [
 ];
 
 const reportSections = [
-  { title: "Предварительный вывод", value: "Возможно при условиях", tone: "accent" },
-  { title: "Уровень уверенности", value: "Средний — не хватает ПЗЗ и ЗОУИТ", tone: "warning" },
-  { title: "Следующий документ", value: "Актуальный градостроительный регламент", tone: "neutral" },
+  { title: "Вывод", value: "Возможно при условиях", tone: "accent" },
+  { title: "Уверенность", value: "Средняя", tone: "warning" },
+  { title: "Не хватает", value: "ПЗЗ и ЗОУИТ", tone: "neutral" },
 ];
 
 export default function Home() {
@@ -82,21 +82,17 @@ export default function Home() {
   if (!isLoggedIn) {
     return (
       <main className="login-screen">
-        <section className="login-card">
+        <section className="login-card clean-login">
           <div className="login-brand">
             <span className="logo-mark">ГА</span>
             <div>
               <strong>ГрадоАналитик</strong>
-              <small>закрытый MVP-кабинет</small>
+              <small>демо-кабинет</small>
             </div>
           </div>
 
-          <span className="eyebrow">Демо-доступ для заказчика</span>
-          <h1>Вход в закрытый кабинет</h1>
-          <p>
-            Кликабельный MVP-прототип сервиса для предпроектного анализа земельных участков.
-            Сценарий показывает путь от карточки участка до предварительного отчёта и 2D-эскиза.
-          </p>
+          <h1>Предпроектный анализ участка</h1>
+          <p>Закрытый кабинет: участок, документы, предварительный вывод, риски и 2D-схема.</p>
 
           <form className="request-form login-form" onSubmit={handleLogin}>
             <label>
@@ -113,11 +109,11 @@ export default function Home() {
               />
             </label>
             {error ? <p className="error-message">{error}</p> : null}
-            <button type="submit">Войти в кабинет</button>
+            <button type="submit">Войти</button>
             <button className="button secondary demo-button" type="button" onClick={openDemoCabinet}>
-              Войти в демо без ввода
+              Открыть демо
             </button>
-            <small className="form-note">Тестовый доступ: demo / demo123</small>
+            <small className="form-note">demo / demo123</small>
           </form>
         </section>
       </main>
@@ -125,17 +121,16 @@ export default function Home() {
   }
 
   return (
-    <main className="app-shell">
-      <header className="site-header">
+    <main className="app-shell clean-shell">
+      <header className="site-header clean-header">
         <div className="container header-inner">
           <button className="logo logo-button" type="button" onClick={() => setScreen("dashboard")}>
             ГрадоАналитик
           </button>
-          <nav className="nav" aria-label="Основная навигация">
-            {steps.map((step) => (
-              <button className={navClass(step.key)} type="button" onClick={() => setScreen(step.key)} key={step.key}>
-                <span>{step.label}</span>
-                <small>{step.caption}</small>
+          <nav className="nav clean-nav" aria-label="Основная навигация">
+            {navItems.map((item) => (
+              <button className={navClass(item.key)} type="button" onClick={() => setScreen(item.key)} key={item.key}>
+                <span>{item.label}</span>
               </button>
             ))}
           </nav>
@@ -145,58 +140,45 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="progress-section">
-        <div className="container stepper">
-          {steps.map((step, index) => (
-            <button className={navClass(step.key)} type="button" onClick={() => setScreen(step.key)} key={step.key}>
-              <span>{index + 1}</span>
-              <div>
-                <strong>{step.label}</strong>
-                <small>{step.caption}</small>
-              </div>
-            </button>
-          ))}
+      <section className="demo-strip">
+        <div className="container demo-strip-inner">
+          <strong>Демо-режим</strong>
+          <span>Файлы и ИИ пока не подключены. Показан пользовательский сценарий MVP.</span>
         </div>
       </section>
 
       {screen === "dashboard" ? (
-        <section className="hero compact-hero">
-          <div className="container hero-grid">
-            <div className="hero-content">
-              <span className="eyebrow light">Закрытый кабинет · демо-режим</span>
-              <h1>Предпроектный анализ участка за один понятный сценарий</h1>
+        <section className="section clean-dashboard">
+          <div className="container dashboard-layout">
+            <div className="dashboard-main">
+              <span className="eyebrow">Текущий анализ</span>
+              <h1>Краснодарский край, демонстрационный участок</h1>
               <p>
-                Пользователь создаёт участок, добавляет документы и получает предварительный вывод:
-                можно, нельзя, возможно при условиях или данных недостаточно.
+                Предварительный статус: <strong>возможно при условиях</strong>. Для уверенного вывода не хватает ПЗЗ и сведений о ЗОУИТ.
               </p>
               <div className="hero-actions">
-                <button className="button primary" type="button" onClick={() => setScreen("plot")}>
-                  Создать анализ
-                </button>
-                <button className="button secondary" type="button" onClick={() => setScreen("report")}>
-                  Смотреть пример отчёта
-                </button>
+                <button className="button primary" type="button" onClick={() => setScreen("plot")}>Заполнить участок</button>
+                <button className="button secondary" type="button" onClick={() => setScreen("report")}>Открыть отчёт</button>
               </div>
             </div>
 
-            <aside className="summary-card dashboard-card">
-              <p className="card-label">Готовность MVP</p>
-              <h2>Кликабельный прототип</h2>
+            <aside className="summary-card dashboard-card action-card">
+              <p className="card-label">Состояние</p>
               <div className="status-list">
                 <div className="status-row">
-                  <span>Сценарий</span>
-                  <strong>4 шага</strong>
-                  <small>вход, участок, документы, отчёт</small>
+                  <span>Участок</span>
+                  <strong>{plotCreated ? "готов" : "демо"}</strong>
+                  <small>основные данные заполнены примером</small>
                 </div>
                 <div className="status-row">
                   <span>Документы</span>
                   <strong>{loadedDocs}/{docs.length}</strong>
-                  <small>часть комплекта показана в демо</small>
+                  <small>часть документов отсутствует</small>
                 </div>
                 <div className="status-row">
-                  <span>Backend</span>
-                  <strong>каркас</strong>
-                  <small>FastAPI /health уже проверен</small>
+                  <span>Отчёт</span>
+                  <strong>{analysisStarted ? "сформирован" : "пример"}</strong>
+                  <small>предварительный вывод без юридической силы</small>
                 </div>
               </div>
             </aside>
@@ -205,18 +187,12 @@ export default function Home() {
       ) : null}
 
       {screen === "plot" ? (
-        <section className="section muted-section">
+        <section className="section muted-section compact-section">
           <div className="container app-grid">
             <div className="stage-card accent-stage">
-              <span className="eyebrow">Шаг 1 · карточка участка</span>
-              <h2>Сначала фиксируем исходные данные</h2>
-              <p className="section-text">
-                В рабочей версии карточка сохраняется в базе, связывается с документами и становится основой отчёта.
-              </p>
-              <div className="mini-panel">
-                <strong>Цель шага</strong>
-                <span>дать ИИ контекст: где участок, какая площадь, что хочет построить пользователь.</span>
-              </div>
+              <span className="eyebrow">Участок</span>
+              <h2>Исходные данные</h2>
+              <p className="section-text">Минимум данных, чтобы связать документы и будущий отчёт.</p>
             </div>
 
             <form className="request-form app-form">
@@ -254,35 +230,31 @@ export default function Home() {
                   <option value="best">Подобрать лучший вариант</option>
                 </select>
               </label>
-              <button type="button" onClick={handleCreatePlot}>Сохранить участок и перейти к документам</button>
-              <small className="form-note">
-                {plotCreated ? "Участок сохранён в демо-сценарии." : "Это кликабельный макет: данные пока не пишутся в базу."}
-              </small>
+              <button type="button" onClick={handleCreatePlot}>Дальше к документам</button>
+              <small className="form-note">{plotCreated ? "Участок сохранён в демо." : "Демо: данные не сохраняются на сервер."}</small>
             </form>
           </div>
         </section>
       ) : null}
 
       {screen === "documents" ? (
-        <section className="section">
+        <section className="section compact-section">
           <div className="container split-section">
             <div className="stage-card">
-              <span className="eyebrow">Шаг 2 · документы</span>
-              <h2>Комплект документов определяет качество вывода</h2>
-              <p className="section-text">
-                В демо показан сценарий загрузки. В рабочей версии каждый файл будет извлекаться, дробиться на фрагменты и использоваться как источник для RAG-ответа.
-              </p>
+              <span className="eyebrow">Документы</span>
+              <h2>Пакет для анализа</h2>
+              <p className="section-text">Чем полнее комплект, тем выше уверенность предварительного вывода.</p>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={handleStartAnalysis}>Запустить анализ</button>
-                <button className="button secondary" type="button" onClick={() => setScreen("plot")}>Назад к участку</button>
+                <button className="button secondary" type="button" onClick={() => setScreen("plot")}>Назад</button>
               </div>
             </div>
 
             <div className="table-card">
               <div className="card-topline">
                 <div>
-                  <p className="card-label">Пакет участка</p>
-                  <h3>{loadedDocs} документа готовы</h3>
+                  <p className="card-label">Документы</p>
+                  <h3>{loadedDocs} из {docs.length}</h3>
                 </div>
                 <span className="quality-badge">демо</span>
               </div>
@@ -291,11 +263,10 @@ export default function Home() {
                 <div className="doc-row" key={doc.name}>
                   <div>
                     <strong>{doc.name}</strong>
-                    <span>{doc.status}</span>
-                    <small>{doc.note}</small>
+                    <span>{doc.note}</span>
                   </div>
                   <button type="button" className={doc.loaded ? "mock-button success" : "mock-button"}>
-                    {doc.loaded ? "Загружено" : "Нужно добавить"}
+                    {doc.status}
                   </button>
                 </div>
               ))}
@@ -305,19 +276,19 @@ export default function Home() {
       ) : null}
 
       {screen === "report" ? (
-        <section className="section dark-section">
+        <section className="section dark-section compact-section">
           <div className="container results-grid">
             <div>
-              <span className="eyebrow light">Шаг 3 · предварительный отчёт</span>
-              <h2>Вывод без фантазий: только по документам</h2>
+              <span className="eyebrow light">Отчёт</span>
+              <h2>Предварительный вывод</h2>
               <p>
                 {analysisStarted
-                  ? "Демо-анализ завершён. Ниже показана структура результата для заказчика."
-                  : "Это пример результата, который получит пользователь после загрузки документов и запуска анализа."}
+                  ? "Демо-анализ завершён. Показана структура результата."
+                  : "Пример отчёта по демонстрационному участку."}
               </p>
               <div className="hero-actions">
-                <button className="button primary" type="button" onClick={() => setScreen("plot")}>Создать новый анализ</button>
-                <button className="button secondary dark-secondary" type="button" onClick={() => setScreen("documents")}>Вернуться к документам</button>
+                <button className="button primary" type="button" onClick={() => setScreen("plot")}>Новый анализ</button>
+                <button className="button secondary dark-secondary" type="button" onClick={() => setScreen("documents")}>Документы</button>
               </div>
             </div>
 
@@ -332,7 +303,7 @@ export default function Home() {
               </div>
 
               <div className="result-block">
-                <h3>Риски и ограничения</h3>
+                <h3>Риски</h3>
                 {riskItems.map((item) => (
                   <div className="result-item" key={item}>✓ {item}</div>
                 ))}
@@ -346,10 +317,10 @@ export default function Home() {
               <div className="sketch-card planning-card">
                 <div className="card-topline">
                   <div>
-                    <strong>Предварительный 2D-эскиз</strong>
-                    <span>демо-компоновка участка с отступами и зонами</span>
+                    <strong>2D-эскиз</strong>
+                    <span>предварительная компоновка участка</span>
                   </div>
-                  <span className="quality-badge">layout json</span>
+                  <span className="quality-badge">layout</span>
                 </div>
 
                 <div className="planning-board" aria-label="Предварительная схема размещения объекта на участке">
@@ -365,14 +336,8 @@ export default function Home() {
                     <div className="setback-line">отступ 3 м</div>
                     <div className="road-zone">подъездная дорога</div>
                     <div className="entry-gate">въезд</div>
-                    <div className="main-building">
-                      <strong>Объект</strong>
-                      <span>18×10 м</span>
-                    </div>
-                    <div className="parking-zone">
-                      <strong>P</strong>
-                      <span>6 м/м</span>
-                    </div>
+                    <div className="main-building"><strong>Объект</strong><span>18×10 м</span></div>
+                    <div className="parking-zone"><strong>P</strong><span>6 м/м</span></div>
                     <div className="tech-zone">тех. зона</div>
                     <div className="green-zone">озеленение</div>
                   </div>
@@ -389,17 +354,6 @@ export default function Home() {
           </div>
         </section>
       ) : null}
-
-      <section className="section warning-section">
-        <div className="container warning-box">
-          <span className="eyebrow">Ограничение демо</span>
-          <h2>Это не юридическое заключение и не официальный градостроительный документ</h2>
-          <p>
-            Сейчас это кликабельный MVP-прототип. Реальная авторизация, загрузка документов, хранение файлов,
-            извлечение текста, RAG-поиск и ИИ-анализ подключаются следующим backend-этапом.
-          </p>
-        </div>
-      </section>
     </main>
   );
 }
