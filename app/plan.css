@@ -9,7 +9,7 @@
 .planning-board {
   overflow: hidden;
   border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 24px;
+  border-radius: 20px;
   background: #f8fafc;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.03);
 }
@@ -19,14 +19,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   border-bottom: 1px solid #e2e8f0;
   background: linear-gradient(135deg, #ffffff, #eef4ff);
 }
 
 .board-toolbar span {
   color: #2563eb;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -34,28 +34,28 @@
 
 .board-toolbar strong {
   color: #0f172a;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .site-plan {
   position: relative;
-  height: 360px;
-  margin: 18px;
+  height: 320px;
+  margin: 14px;
   overflow: hidden;
   border: 2px solid #1e3a8a;
-  border-radius: 24px;
+  border-radius: 22px;
   background:
     linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
     linear-gradient(0deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
     linear-gradient(135deg, #ffffff 0%, #f8fbff 58%, #eef7ff 100%);
-  background-size: 24px 24px;
+  background-size: 22px 22px;
   color: #0f172a;
 }
 
 .site-plan::before {
   content: "";
   position: absolute;
-  inset: 34px;
+  inset: 30px;
   border: 1px dashed rgba(30, 58, 138, 0.42);
   border-radius: 18px;
   pointer-events: none;
@@ -63,17 +63,17 @@
 
 .north-arrow {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   display: inline-flex;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
   background: #0b1f49;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 950;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
 }
@@ -82,35 +82,35 @@
   position: absolute;
   display: inline-flex;
   border-radius: 999px;
-  padding: 6px 10px;
+  padding: 5px 9px;
   background: rgba(255, 255, 255, 0.94);
   color: #1e3a8a;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 950;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
 
 .dimension-top {
-  top: 12px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .dimension-left {
   top: 50%;
-  left: 10px;
+  left: 8px;
   transform: translateY(-50%) rotate(-90deg);
 }
 
 .setback-line {
   position: absolute;
-  top: 42px;
-  left: 48px;
+  top: 38px;
+  left: 44px;
   border-radius: 999px;
-  padding: 7px 10px;
+  padding: 6px 9px;
   background: rgba(219, 234, 254, 0.92);
   color: #1d4ed8;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -122,14 +122,14 @@
   bottom: 0;
   left: 0;
   display: flex;
-  height: 54px;
+  height: 48px;
   align-items: center;
   justify-content: center;
   background:
     repeating-linear-gradient(90deg, rgba(15, 23, 42, 0.16) 0 12px, rgba(15, 23, 42, 0.06) 12px 24px),
     #dbe3ee;
   color: #334155;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -137,34 +137,34 @@
 
 .entry-gate {
   position: absolute;
-  left: 82px;
-  bottom: 42px;
+  left: 78px;
+  bottom: 38px;
   z-index: 4;
-  width: 112px;
-  height: 42px;
+  width: 104px;
+  height: 38px;
   border: 2px solid #f59e0b;
-  border-radius: 16px 16px 4px 4px;
+  border-radius: 14px 14px 4px 4px;
   background: #fff7ed;
   color: #92400e;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
 }
 
 .main-building {
   position: absolute;
-  top: 116px;
-  left: 138px;
+  top: 102px;
+  left: 132px;
   z-index: 3;
   display: grid;
-  width: 190px;
-  height: 118px;
+  width: 178px;
+  height: 106px;
   place-items: center;
   border: 1px solid rgba(120, 53, 15, 0.28);
-  border-radius: 22px;
+  border-radius: 20px;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent),
     #d8a94f;
@@ -182,7 +182,7 @@
 
 .main-building strong {
   align-self: end;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -191,34 +191,34 @@
 .main-building span {
   align-self: start;
   color: rgba(31, 41, 55, 0.76);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
 }
 
 .parking-zone {
   position: absolute;
-  right: 54px;
-  bottom: 92px;
+  right: 48px;
+  bottom: 82px;
   z-index: 3;
   display: grid;
-  width: 132px;
-  height: 82px;
+  width: 120px;
+  height: 72px;
   place-items: center;
   border: 1px dashed #1d4ed8;
-  border-radius: 18px;
+  border-radius: 16px;
   background: rgba(96, 165, 250, 0.2);
   color: #0f3d73;
 }
 
 .parking-zone strong {
   align-self: end;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 950;
 }
 
 .parking-zone span {
   align-self: start;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 900;
 }
 
@@ -229,27 +229,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 18px;
-  font-size: 12px;
+  border-radius: 16px;
+  font-size: 11px;
   font-weight: 950;
   text-transform: uppercase;
 }
 
 .tech-zone {
-  top: 90px;
-  right: 66px;
-  width: 118px;
-  height: 54px;
+  top: 78px;
+  right: 58px;
+  width: 108px;
+  height: 50px;
   border: 1px solid rgba(71, 85, 105, 0.24);
   background: rgba(226, 232, 240, 0.92);
   color: #475569;
 }
 
 .green-zone {
-  left: 54px;
-  bottom: 112px;
-  width: 86px;
-  height: 92px;
+  left: 48px;
+  bottom: 104px;
+  width: 78px;
+  height: 82px;
   background:
     radial-gradient(circle at 25% 25%, rgba(255,255,255,0.7) 0 4px, transparent 5px),
     rgba(187, 247, 208, 0.88);
@@ -259,23 +259,23 @@
 .plan-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 16px;
-  padding: 0 18px 18px;
+  gap: 8px 14px;
+  padding: 0 14px 14px;
 }
 
 .plan-legend span {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   color: #334155;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 850;
 }
 
 .plan-legend i {
   display: inline-flex;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   border-radius: 4px;
 }
 
@@ -286,128 +286,193 @@
 
 @media (max-width: 900px) {
   .site-plan {
-    height: 310px;
-    margin: 14px;
-    border-radius: 20px;
-    background-size: 20px 20px;
-  }
-
-  .main-building {
-    top: 104px;
-    left: 94px;
-    width: 156px;
-    height: 96px;
-  }
-
-  .parking-zone {
-    right: 34px;
-    bottom: 84px;
-    width: 104px;
-    height: 68px;
-  }
-
-  .tech-zone {
-    top: 80px;
-    right: 40px;
-    width: 96px;
-  }
-
-  .green-zone {
-    left: 38px;
-    bottom: 108px;
-    width: 66px;
-    height: 78px;
-  }
-
-  .entry-gate {
-    left: 58px;
-    width: 92px;
-  }
-}
-
-@media (max-width: 520px) {
-  .board-toolbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .site-plan {
-    height: 280px;
-    margin: 10px;
+    height: 270px;
+    margin: 12px;
+    border-radius: 18px;
+    background-size: 18px 18px;
   }
 
   .site-plan::before {
     inset: 24px;
   }
 
-  .dimension-left {
-    display: none;
-  }
-
-  .setback-line {
-    top: 34px;
-    left: 34px;
-    font-size: 9px;
-  }
-
-  .north-arrow {
-    width: 30px;
-    height: 30px;
-    font-size: 11px;
-  }
-
   .main-building {
-    top: 98px;
-    left: 72px;
-    width: 132px;
-    height: 82px;
-    border-radius: 18px;
-  }
-
-  .main-building strong {
-    font-size: 14px;
+    top: 92px;
+    left: 88px;
+    width: 142px;
+    height: 84px;
   }
 
   .parking-zone {
-    right: 20px;
-    bottom: 74px;
-    width: 88px;
+    right: 28px;
+    bottom: 72px;
+    width: 96px;
     height: 58px;
   }
 
   .tech-zone {
-    top: 74px;
-    right: 24px;
-    width: 82px;
+    top: 70px;
+    right: 34px;
+    width: 88px;
     height: 42px;
-    font-size: 10px;
   }
 
   .green-zone {
-    left: 28px;
-    bottom: 98px;
-    width: 54px;
-    height: 66px;
-    font-size: 9px;
+    left: 34px;
+    bottom: 94px;
+    width: 60px;
+    height: 68px;
   }
 
   .entry-gate {
-    left: 42px;
-    bottom: 42px;
-    width: 74px;
-    height: 34px;
+    left: 52px;
+    bottom: 36px;
+    width: 84px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 520px) {
+  .planning-board {
+    border-radius: 16px;
+  }
+
+  .board-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+    padding: 9px 11px;
+  }
+
+  .board-toolbar span {
+    font-size: 9px;
+  }
+
+  .board-toolbar strong {
+    font-size: 11px;
+  }
+
+  .site-plan {
+    height: 210px;
+    margin: 8px;
+    border-width: 1px;
+    border-radius: 15px;
+    background-size: 14px 14px;
+  }
+
+  .site-plan::before {
+    inset: 17px;
+    border-radius: 11px;
+  }
+
+  .dimension-left {
+    display: none;
+  }
+
+  .dimension-top {
+    top: 7px;
+  }
+
+  .dimension {
+    padding: 4px 7px;
+    font-size: 9px;
+  }
+
+  .setback-line {
+    top: 25px;
+    left: 26px;
+    padding: 4px 7px;
+    font-size: 8px;
+  }
+
+  .north-arrow {
+    top: 7px;
+    right: 7px;
+    width: 25px;
+    height: 25px;
     font-size: 10px;
   }
 
-  .road-zone {
+  .main-building {
+    top: 74px;
+    left: 64px;
+    width: 112px;
+    height: 62px;
+    border-radius: 13px;
+  }
+
+  .main-building strong {
+    font-size: 12px;
+  }
+
+  .main-building span {
+    font-size: 9px;
+  }
+
+  .parking-zone {
+    right: 16px;
+    bottom: 58px;
+    width: 72px;
     height: 46px;
-    font-size: 10px;
+    border-radius: 12px;
+  }
+
+  .parking-zone strong {
+    font-size: 17px;
+  }
+
+  .parking-zone span {
+    font-size: 9px;
+  }
+
+  .tech-zone {
+    top: 58px;
+    right: 18px;
+    width: 68px;
+    height: 32px;
+    border-radius: 12px;
+    font-size: 8px;
+  }
+
+  .green-zone {
+    left: 23px;
+    bottom: 77px;
+    width: 46px;
+    height: 50px;
+    border-radius: 12px;
+    font-size: 8px;
+  }
+
+  .entry-gate {
+    left: 35px;
+    bottom: 33px;
+    width: 62px;
+    height: 26px;
+    border-width: 1px;
+    border-radius: 10px 10px 3px 3px;
+    font-size: 8px;
+  }
+
+  .road-zone {
+    height: 34px;
+    font-size: 8px;
+    letter-spacing: 0.06em;
   }
 
   .plan-legend {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 0 12px 14px;
+    gap: 6px 8px;
+    padding: 0 10px 11px;
+  }
+
+  .plan-legend span {
+    gap: 6px;
+    font-size: 10px;
+  }
+
+  .plan-legend i {
+    width: 9px;
+    height: 9px;
   }
 }
