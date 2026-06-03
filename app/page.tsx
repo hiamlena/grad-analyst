@@ -35,6 +35,57 @@ const reportSections = [
   { title: "Не хватает", value: "ПЗЗ и ЗОУИТ", tone: "neutral" },
 ];
 
+function PlanSvg() {
+  return (
+    <svg className="plan-svg" viewBox="0 0 760 430" role="img" aria-label="Схема участка с объектом, парковкой, въездом и отступами">
+      <defs>
+        <pattern id="planGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+          <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dbeafe" strokeWidth="1" />
+        </pattern>
+        <linearGradient id="buildingFill" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stopColor="#f1c76a" />
+          <stop offset="1" stopColor="#d8a94f" />
+        </linearGradient>
+        <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="12" stdDeviation="12" floodColor="#0f172a" floodOpacity="0.13" />
+        </filter>
+      </defs>
+
+      <rect x="0" y="0" width="760" height="430" rx="28" fill="#f8fafc" />
+      <rect x="28" y="34" width="704" height="328" rx="24" fill="url(#planGrid)" stroke="#1e3a8a" strokeWidth="2" />
+      <rect x="70" y="72" width="620" height="246" rx="18" fill="none" stroke="#2563eb" strokeWidth="2" strokeDasharray="8 8" opacity="0.5" />
+
+      <rect x="28" y="314" width="704" height="48" rx="0" fill="#cbd5e1" />
+      <path d="M28 338 H732" stroke="#94a3b8" strokeWidth="2" strokeDasharray="16 12" opacity="0.7" />
+      <text x="380" y="345" textAnchor="middle" className="svg-road">ПОДЪЕЗДНАЯ ДОРОГА</text>
+
+      <rect x="98" y="270" width="98" height="48" rx="12" fill="#fff7ed" stroke="#f59e0b" strokeWidth="3" />
+      <text x="147" y="300" textAnchor="middle" className="svg-entry">ВЪЕЗД</text>
+
+      <rect x="158" y="150" width="178" height="104" rx="18" fill="url(#buildingFill)" stroke="#b7791f" strokeWidth="1" filter="url(#softShadow)" />
+      <text x="247" y="197" textAnchor="middle" className="svg-building-title">ОБЪЕКТ</text>
+      <text x="247" y="221" textAnchor="middle" className="svg-building-note">18×10 м</text>
+
+      <rect x="560" y="200" width="118" height="74" rx="16" fill="#e0f2fe" stroke="#60a5fa" strokeWidth="2" strokeDasharray="6 6" />
+      <text x="619" y="234" textAnchor="middle" className="svg-parking-title">P</text>
+      <text x="619" y="255" textAnchor="middle" className="svg-parking-note">6 м/м</text>
+
+      <rect x="560" y="116" width="116" height="56" rx="16" fill="#e2e8f0" stroke="#94a3b8" />
+      <text x="618" y="150" textAnchor="middle" className="svg-tech">ТЕХ. ЗОНА</text>
+
+      <rect x="82" y="174" width="92" height="92" rx="18" fill="#bbf7d0" opacity="0.9" />
+      <circle cx="106" cy="198" r="8" fill="#86efac" />
+      <circle cx="132" cy="222" r="7" fill="#86efac" />
+      <text x="128" y="234" textAnchor="middle" className="svg-green">ЗЕЛЕНЬ</text>
+
+      <text x="380" y="66" textAnchor="middle" className="svg-dimension">40 м</text>
+      <text x="84" y="96" className="svg-setback">отступ 3 м</text>
+      <circle cx="698" cy="72" r="22" fill="#0b1f49" />
+      <text x="698" y="79" textAnchor="middle" className="svg-north">N</text>
+    </svg>
+  );
+}
+
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [screen, setScreen] = useState<Screen>("dashboard");
@@ -101,18 +152,11 @@ export default function Home() {
             </label>
             <label>
               Пароль
-              <input
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="demo123"
-                type="password"
-              />
+              <input value={password} onChange={(event) => setPassword(event.target.value)} placeholder="demo123" type="password" />
             </label>
             {error ? <p className="error-message">{error}</p> : null}
             <button type="submit">Войти</button>
-            <button className="button secondary demo-button" type="button" onClick={openDemoCabinet}>
-              Открыть демо
-            </button>
+            <button className="button secondary demo-button" type="button" onClick={openDemoCabinet}>Открыть демо</button>
             <small className="form-note">demo / demo123</small>
           </form>
         </section>
@@ -124,9 +168,7 @@ export default function Home() {
     <main className="app-shell clean-shell">
       <header className="site-header clean-header">
         <div className="container header-inner">
-          <button className="logo logo-button" type="button" onClick={() => setScreen("dashboard")}>
-            ГрадоАналитик
-          </button>
+          <button className="logo logo-button" type="button" onClick={() => setScreen("dashboard")}>ГрадоАналитик</button>
           <nav className="nav clean-nav" aria-label="Основная навигация">
             {navItems.map((item) => (
               <button className={navClass(item.key)} type="button" onClick={() => setScreen(item.key)} key={item.key}>
@@ -134,9 +176,7 @@ export default function Home() {
               </button>
             ))}
           </nav>
-          <button className="logout-button" type="button" onClick={() => setIsLoggedIn(false)}>
-            Выйти
-          </button>
+          <button className="logout-button" type="button" onClick={() => setIsLoggedIn(false)}>Выйти</button>
         </div>
       </header>
 
@@ -153,9 +193,7 @@ export default function Home() {
             <div className="dashboard-main">
               <span className="eyebrow">Текущий анализ</span>
               <h1>Краснодарский край, демонстрационный участок</h1>
-              <p>
-                Предварительный статус: <strong>возможно при условиях</strong>. Для уверенного вывода не хватает ПЗЗ и сведений о ЗОУИТ.
-              </p>
+              <p>Предварительный статус: <strong>возможно при условиях</strong>. Для уверенного вывода не хватает ПЗЗ и сведений о ЗОУИТ.</p>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={() => setScreen("plot")}>Заполнить участок</button>
                 <button className="button secondary" type="button" onClick={() => setScreen("report")}>Открыть отчёт</button>
@@ -165,21 +203,9 @@ export default function Home() {
             <aside className="summary-card dashboard-card action-card">
               <p className="card-label">Состояние</p>
               <div className="status-list">
-                <div className="status-row">
-                  <span>Участок</span>
-                  <strong>{plotCreated ? "готов" : "демо"}</strong>
-                  <small>основные данные заполнены примером</small>
-                </div>
-                <div className="status-row">
-                  <span>Документы</span>
-                  <strong>{loadedDocs}/{docs.length}</strong>
-                  <small>часть документов отсутствует</small>
-                </div>
-                <div className="status-row">
-                  <span>Отчёт</span>
-                  <strong>{analysisStarted ? "сформирован" : "пример"}</strong>
-                  <small>предварительный вывод без юридической силы</small>
-                </div>
+                <div className="status-row"><span>Участок</span><strong>{plotCreated ? "готов" : "демо"}</strong><small>основные данные заполнены примером</small></div>
+                <div className="status-row"><span>Документы</span><strong>{loadedDocs}/{docs.length}</strong><small>часть документов отсутствует</small></div>
+                <div className="status-row"><span>Отчёт</span><strong>{analysisStarted ? "сформирован" : "пример"}</strong><small>предварительный вывод без юридической силы</small></div>
               </div>
             </aside>
           </div>
@@ -196,40 +222,14 @@ export default function Home() {
             </div>
 
             <form className="request-form app-form">
-              <label>
-                Кадастровый номер
-                <input type="text" defaultValue="23:00:0000000:000" />
-              </label>
-              <label>
-                Адрес
-                <input type="text" defaultValue="Краснодарский край, демонстрационный участок" />
-              </label>
+              <label>Кадастровый номер<input type="text" defaultValue="23:00:0000000:000" /></label>
+              <label>Адрес<input type="text" defaultValue="Краснодарский край, демонстрационный участок" /></label>
               <div className="form-grid">
-                <label>
-                  Площадь
-                  <input type="text" defaultValue="1200 кв. м" />
-                </label>
-                <label>
-                  Подъезд
-                  <select defaultValue="south">
-                    <option value="south">с южной стороны</option>
-                    <option value="north">с северной стороны</option>
-                    <option value="east">с восточной стороны</option>
-                    <option value="west">с западной стороны</option>
-                  </select>
-                </label>
+                <label>Площадь<input type="text" defaultValue="1200 кв. м" /></label>
+                <label>Подъезд<select defaultValue="south"><option value="south">с южной стороны</option><option value="north">с северной стороны</option><option value="east">с восточной стороны</option><option value="west">с западной стороны</option></select></label>
               </div>
-              <label>
-                Что планируется построить
-                <input type="text" defaultValue="Небольшой коммерческий объект" />
-              </label>
-              <label>
-                Режим анализа
-                <select defaultValue="object">
-                  <option value="object">Я знаю, что хочу построить</option>
-                  <option value="best">Подобрать лучший вариант</option>
-                </select>
-              </label>
+              <label>Что планируется построить<input type="text" defaultValue="Небольшой коммерческий объект" /></label>
+              <label>Режим анализа<select defaultValue="object"><option value="object">Я знаю, что хочу построить</option><option value="best">Подобрать лучший вариант</option></select></label>
               <button type="button" onClick={handleCreatePlot}>Дальше к документам</button>
               <small className="form-note">{plotCreated ? "Участок сохранён в демо." : "Демо: данные не сохраняются на сервер."}</small>
             </form>
@@ -251,23 +251,11 @@ export default function Home() {
             </div>
 
             <div className="table-card">
-              <div className="card-topline">
-                <div>
-                  <p className="card-label">Документы</p>
-                  <h3>{loadedDocs} из {docs.length}</h3>
-                </div>
-                <span className="quality-badge">демо</span>
-              </div>
-
+              <div className="card-topline"><div><p className="card-label">Документы</p><h3>{loadedDocs} из {docs.length}</h3></div><span className="quality-badge">демо</span></div>
               {docs.map((doc) => (
                 <div className="doc-row" key={doc.name}>
-                  <div>
-                    <strong>{doc.name}</strong>
-                    <span>{doc.note}</span>
-                  </div>
-                  <button type="button" className={doc.loaded ? "mock-button success" : "mock-button"}>
-                    {doc.status}
-                  </button>
+                  <div><strong>{doc.name}</strong><span>{doc.note}</span></div>
+                  <button type="button" className={doc.loaded ? "mock-button success" : "mock-button"}>{doc.status}</button>
                 </div>
               ))}
             </div>
@@ -281,11 +269,7 @@ export default function Home() {
             <div>
               <span className="eyebrow light">Отчёт</span>
               <h2>Предварительный вывод</h2>
-              <p>
-                {analysisStarted
-                  ? "Демо-анализ завершён. Показана структура результата."
-                  : "Пример отчёта по демонстрационному участку."}
-              </p>
+              <p>{analysisStarted ? "Демо-анализ завершён. Показана структура результата." : "Пример отчёта по демонстрационному участку."}</p>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={() => setScreen("plot")}>Новый анализ</button>
                 <button className="button secondary dark-secondary" type="button" onClick={() => setScreen("documents")}>Документы</button>
@@ -294,60 +278,18 @@ export default function Home() {
 
             <div className="result-panel">
               <div className="report-summary-grid">
-                {reportSections.map((item) => (
-                  <article className={`report-kpi ${item.tone}`} key={item.title}>
-                    <span>{item.title}</span>
-                    <strong>{item.value}</strong>
-                  </article>
-                ))}
+                {reportSections.map((item) => (<article className={`report-kpi ${item.tone}`} key={item.title}><span>{item.title}</span><strong>{item.value}</strong></article>))}
               </div>
 
-              <div className="result-block">
-                <h3>Риски</h3>
-                {riskItems.map((item) => (
-                  <div className="result-item" key={item}>✓ {item}</div>
-                ))}
-              </div>
-
-              <div className="source-card">
-                <h3>Недостающие данные</h3>
-                <p>Данных недостаточно. Для уверенного вывода нужно загрузить: ПЗЗ, сведения о ЗОУИТ, актуальную выписку ЕГРН и схему инженерных сетей.</p>
-              </div>
+              <div className="result-block"><h3>Риски</h3>{riskItems.map((item) => (<div className="result-item" key={item}>✓ {item}</div>))}</div>
+              <div className="source-card"><h3>Недостающие данные</h3><p>Данных недостаточно. Для уверенного вывода нужно загрузить: ПЗЗ, сведения о ЗОУИТ, актуальную выписку ЕГРН и схему инженерных сетей.</p></div>
 
               <div className="sketch-card planning-card">
-                <div className="card-topline">
-                  <div>
-                    <strong>2D-эскиз</strong>
-                    <span>предварительная компоновка участка</span>
-                  </div>
-                  <span className="quality-badge">layout</span>
-                </div>
-
-                <div className="planning-board" aria-label="Предварительная схема размещения объекта на участке">
-                  <div className="board-toolbar">
-                    <span>Схема 1:500</span>
-                    <strong>Коммерческий объект · 1200 м²</strong>
-                  </div>
-
-                  <div className="site-plan">
-                    <span className="north-arrow">N</span>
-                    <span className="dimension dimension-top">40 м</span>
-                    <span className="dimension dimension-left">30 м</span>
-                    <div className="setback-line">отступ 3 м</div>
-                    <div className="road-zone">подъездная дорога</div>
-                    <div className="entry-gate">въезд</div>
-                    <div className="main-building"><strong>Объект</strong><span>18×10 м</span></div>
-                    <div className="parking-zone"><strong>P</strong><span>6 м/м</span></div>
-                    <div className="tech-zone">тех. зона</div>
-                    <div className="green-zone">озеленение</div>
-                  </div>
-
-                  <div className="plan-legend">
-                    <span><i className="legend-building" /> объект</span>
-                    <span><i className="legend-parking" /> парковка</span>
-                    <span><i className="legend-tech" /> техзона</span>
-                    <span><i className="legend-green" /> зелёная зона</span>
-                  </div>
+                <div className="card-topline"><div><strong>2D-эскиз</strong><span>векторная схема участка</span></div><span className="quality-badge">svg</span></div>
+                <div className="planning-board svg-board" aria-label="Предварительная схема размещения объекта на участке">
+                  <div className="board-toolbar"><span>Схема 1:500</span><strong>Коммерческий объект · 1200 м²</strong></div>
+                  <PlanSvg />
+                  <div className="plan-legend"><span><i className="legend-building" /> объект</span><span><i className="legend-parking" /> парковка</span><span><i className="legend-tech" /> техзона</span><span><i className="legend-green" /> зелёная зона</span></div>
                 </div>
               </div>
             </div>
