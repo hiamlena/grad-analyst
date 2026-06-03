@@ -609,19 +609,75 @@ h3 {
 }
 
 @media (max-width: 900px) {
+  body {
+    padding-bottom: 92px;
+  }
+
+  .container {
+    width: min(100% - 24px, 720px);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+  }
+
+  .header-inner {
+    min-height: 66px;
+    gap: 10px;
+  }
+
+  .logo,
+  .logo-button {
+    font-size: 20px;
+  }
+
+  .logout-button {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
   .nav {
-    display: none;
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    padding: 8px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 18px 55px rgba(15, 23, 42, 0.24);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav a,
+  .nav button {
+    min-height: 46px;
+    padding: 8px 6px;
+    border-radius: 16px;
+    font-size: 11px;
+    line-height: 1.1;
+    text-align: center;
   }
 
   .hero,
   .login-screen {
-    padding: 46px 0;
+    padding: 34px 0 42px;
+  }
+
+  .login-screen {
+    min-height: 100vh;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .hero::before,
   .login-screen::before {
-    inset: 10px;
-    border-radius: 28px;
+    inset: 8px;
+    border-radius: 26px;
   }
 
   .hero-grid,
@@ -630,32 +686,129 @@ h3 {
   .split-section,
   .results-grid {
     grid-template-columns: 1fr;
+    gap: 22px;
   }
 
   .summary-card,
   .request-form,
   .warning-box,
   .table-card,
-  .login-card {
+  .login-card,
+  .info-card {
     border-radius: 22px;
-    padding: 24px;
+    padding: 22px;
   }
 
   .section {
-    padding: 56px 0;
+    padding: 42px 0;
   }
 
   h1 {
-    font-size: 42px;
+    max-width: 100%;
+    margin-bottom: 18px;
+    font-size: 38px;
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+  }
+
+  h2 {
+    font-size: 30px;
+    line-height: 1.08;
+  }
+
+  .hero-content p,
+  .section-text,
+  .section-head p,
+  .dark-section p,
+  .warning-box p,
+  .login-card p {
+    font-size: 16px;
+    line-height: 1.58;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .button,
+  .request-form button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    border-radius: 15px;
   }
 
   .doc-row {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .mock-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .request-form input,
+  .request-form textarea,
+  .request-form select {
+    min-height: 50px;
+    font-size: 16px;
+  }
+
+  .sketch-box {
+    min-height: 190px;
+  }
+
+  .plot-area {
+    inset: 12px;
+  }
+
+  .building-area {
+    left: 42px;
+    top: 55px;
+    width: 96px;
+    height: 64px;
+  }
+
+  .parking-area {
+    right: 28px;
+    bottom: 42px;
+    width: 94px;
+    height: 44px;
   }
 
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    width: calc(100% - 20px);
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  h2 {
+    font-size: 27px;
+  }
+
+  .login-card,
+  .summary-card,
+  .request-form,
+  .warning-box,
+  .table-card {
+    padding: 18px;
+  }
+
+  .nav button {
+    font-size: 10px;
   }
 }
