@@ -2,59 +2,63 @@
 
 import { FormEvent, useState } from "react";
 
+type Screen = "dashboard" | "plot" | "documents" | "report";
+
 const demoLogin = "demo";
 const demoPassword = "demo123";
 
-const steps = [
-  {
-    title: "Участок",
-    text: "Кадастровый номер, адрес, площадь и цель строительства.",
-  },
-  {
-    title: "Документы",
-    text: "ПЗЗ, ГПЗУ, ЕГРН, ЗОУИТ, схема участка и топосъёмка.",
-  },
-  {
-    title: "Отчёт",
-    text: "Вывод, ограничения, риски, рекомендации, источники и 2D-эскиз.",
-  },
-];
-
-const plotFields = ["Кадастровый номер", "Адрес", "Площадь", "Что планируется построить"];
-
-const documents = [
-  { name: "ПЗЗ / градостроительный регламент", status: "требуется" },
-  { name: "ГПЗУ", status: "требуется" },
-  { name: "Выписка ЕГРН", status: "требуется" },
-  { name: "Сведения о ЗОУИТ", status: "если есть" },
-  { name: "Схема участка / топосъёмка", status: "желательно" },
+const docs = [
+  { name: "ПЗЗ / градостроительный регламент", status: "требуется", loaded: false },
+  { name: "ГПЗУ", status: "загружен демо-файл", loaded: true },
+  { name: "Выписка ЕГРН", status: "загружен демо-файл", loaded: true },
+  { name: "Сведения о ЗОУИТ", status: "если есть", loaded: false },
+  { name: "Схема участка", status: "загружен демо-файл", loaded: true },
 ];
 
 const reportItems = [
-  "можно / нельзя / возможно при условиях / данных недостаточно",
-  "территориальная зона и ВРИ",
-  "параметры застройки и ограничения",
-  "риски и рекомендации",
-  "источники документов",
-  "предварительный 2D-эскиз",
+  "Предварительный вывод: возможно при условиях",
+  "Нужно проверить территориальную зону и ВРИ по актуальному ПЗЗ",
+  "Требуется загрузить градостроительный регламент",
+  "Риски: ЗОУИТ, отступы, подъезд, инженерные сети",
+  "Рекомендация: запросить ГПЗУ и актуальную выписку ЕГРН",
 ];
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [screen, setScreen] = useState<Screen>("dashboard");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [plotCreated, setPlotCreated] = useState(false);
+  const [analysisStarted, setAnalysisStarted] = useState(false);
+
+  function openDemoCabinet() {
+    setLogin(demoLogin);
+    setPassword(demoPassword);
+    setError("");
+    setIsLoggedIn(true);
+    setScreen("dashboard");
+  }
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (login === demoLogin && password === demoPassword) {
-      setIsLoggedIn(true);
-      setError("");
+    if (login.trim() === demoLogin && password.trim() === demoPassword) {
+      openDemoCabinet();
       return;
     }
 
     setError("Неверный логин или пароль для демо-входа");
+  }
+
+  function handleCreatePlot() {
+    setPlotCreated(true);
+    setScreen("documents");
+  }
+
+  function handleStartAnalysis() {
+    setAnalysisStarted(true);
+    setScreen("report");
   }
 
   if (!isLoggedIn) {
@@ -64,7 +68,8 @@ export default function Home() {
           <span className="eyebrow">Демо-доступ</span>
           <h1>Вход в закрытый кабинет</h1>
           <p>
-            Прототип сервиса для предпроектного анализа земельных участков. Реальная авторизация и хранение документов подключаются на backend-этапе.
+            Кликабельный MVP-прототип сервиса для предпроектного анализа земельных участков.
+            Реальная авторизация и хранение документов подключаются на backend-этапе.
           </p>
 
           <form className="request-form login-form" onSubmit={handleLogin}>
@@ -83,6 +88,9 @@ export default function Home() {
             </label>
             {error ? <p className="error-message">{error}</p> : null}
             <button type="submit">Войти в кабинет</button>
+            <button className="button secondary demo-button" type="button" onClick={openDemoCabinet}>
+              Войти в демо без ввода
+            </button>
             <small className="form-note">Тестовый доступ: demo / demo123</small>
           </form>
         </section>
@@ -94,14 +102,14 @@ export default function Home() {
     <main>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="logo" href="#top" aria-label="ГрадоАналитик">
+          <button className="logo logo-button" type="button" onClick={() => setScreen("dashboard")}>
             ГрадоАналитик
-          </a>
+          </button>
           <nav className="nav" aria-label="Основная навигация">
-            <a href="#how">Как работает</a>
-            <a href="#plot">Участок</a>
-            <a href="#documents">Документы</a>
-            <a href="#report">Отчёт</a>
+            <button type="button" onClick={() => setScreen("dashboard")}>Кабинет</button>
+            <button type="button" onClick={() => setScreen("plot")}>Новый анализ</button>
+            <button type="button" onClick={() => setScreen("documents")}>Документы</button>
+            <button type="button" onClick={() => setScreen("report")}>Отчёт</button>
           </nav>
           <button className="logout-button" type="button" onClick={() => setIsLoggedIn(false)}>
             Выйти
@@ -109,138 +117,154 @@ export default function Home() {
         </div>
       </header>
 
-      <section id="top" className="hero compact-hero">
-        <div className="container hero-grid">
-          <div className="hero-content">
-            <span className="eyebrow">Закрытый MVP-кабинет</span>
-            <h1>Предпроектный анализ земельного участка</h1>
-            <p>
-              Пользователь создаёт участок, загружает документы и получает предварительный вывод: можно строить, нельзя, возможно при условиях или данных недостаточно.
-            </p>
-            <div className="hero-actions">
-              <a className="button primary" href="#plot">Создать анализ</a>
-              <a className="button secondary" href="#report">Смотреть результат</a>
+      {screen === "dashboard" ? (
+        <section className="hero compact-hero">
+          <div className="container hero-grid">
+            <div className="hero-content">
+              <span className="eyebrow">Закрытый MVP-кабинет</span>
+              <h1>Предпроектный анализ земельного участка</h1>
+              <p>
+                Пользователь создаёт участок, загружает документы и получает предварительный вывод:
+                можно строить, нельзя, возможно при условиях или данных недостаточно.
+              </p>
+              <div className="hero-actions">
+                <button className="button primary" type="button" onClick={() => setScreen("plot")}>Создать анализ</button>
+                <button className="button secondary" type="button" onClick={() => setScreen("report")}>Смотреть пример отчёта</button>
+              </div>
+            </div>
+
+            <aside className="summary-card">
+              <p className="card-label">Статус кабинета</p>
+              <h2>Демо-прототип</h2>
+              <ul>
+                <li>вход в кабинет есть</li>
+                <li>кнопки переключают экраны</li>
+                <li>backend-каркас уже запущен</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+      ) : null}
+
+      {screen === "plot" ? (
+        <section className="section muted-section">
+          <div className="container app-grid">
+            <div>
+              <span className="eyebrow">Шаг 1</span>
+              <h2>Карточка участка</h2>
+              <p className="section-text">
+                Введите основные данные. В рабочей версии они сохраняются в базе и связываются с документами участка.
+              </p>
+            </div>
+
+            <form className="request-form app-form">
+              <label>
+                Кадастровый номер
+                <input type="text" defaultValue="23:00:0000000:000" />
+              </label>
+              <label>
+                Адрес
+                <input type="text" defaultValue="Краснодарский край, демонстрационный участок" />
+              </label>
+              <label>
+                Площадь
+                <input type="text" defaultValue="1200 кв. м" />
+              </label>
+              <label>
+                Что планируется построить
+                <input type="text" defaultValue="Небольшой коммерческий объект" />
+              </label>
+              <label>
+                Режим анализа
+                <select defaultValue="object">
+                  <option value="object">Я знаю, что хочу построить</option>
+                  <option value="best">Подобрать лучший вариант</option>
+                </select>
+              </label>
+              <button type="button" onClick={handleCreatePlot}>Сохранить участок и перейти к документам</button>
+              <small className="form-note">
+                {plotCreated ? "Участок сохранён в демо-сценарии." : "Это кликабельный макет: данные пока не пишутся в базу."}
+              </small>
+            </form>
+          </div>
+        </section>
+      ) : null}
+
+      {screen === "documents" ? (
+        <section className="section">
+          <div className="container split-section">
+            <div>
+              <span className="eyebrow">Шаг 2</span>
+              <h2>Документы для анализа</h2>
+              <p className="section-text">
+                В рабочей версии файлы будут храниться на закрытом сервере. В демо показан сценарий загрузки и проверки комплекта.
+              </p>
+              <div className="hero-actions">
+                <button className="button primary" type="button" onClick={handleStartAnalysis}>Запустить анализ</button>
+                <button className="button secondary" type="button" onClick={() => setScreen("plot")}>Назад к участку</button>
+              </div>
+            </div>
+
+            <div className="table-card">
+              {docs.map((doc) => (
+                <div className="doc-row" key={doc.name}>
+                  <div>
+                    <strong>{doc.name}</strong>
+                    <span>{doc.status}</span>
+                  </div>
+                  <button type="button" className={doc.loaded ? "mock-button success" : "mock-button"}>
+                    {doc.loaded ? "Загружено" : "Макет загрузки"}
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
+        </section>
+      ) : null}
 
-          <aside className="summary-card">
-            <p className="card-label">Статус</p>
-            <h2>Демо-прототип</h2>
-            <ul>
-              <li>интерфейс кабинета готов</li>
-              <li>backend-каркас запущен</li>
-              <li>загрузка документов — следующий этап</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section id="how" className="section">
-        <div className="container">
-          <div className="section-head">
-            <span className="eyebrow">Сценарий работы</span>
-            <h2>Как работает сервис</h2>
-            <p>В интерфейсе оставлены только ключевые действия, которые нужны заказчику для понимания продукта.</p>
-          </div>
-
-          <div className="cards-grid">
-            {steps.map((step) => (
-              <article className="info-card feature-card" key={step.title}>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="plot" className="section muted-section">
-        <div className="container app-grid">
-          <div>
-            <span className="eyebrow">Новый анализ</span>
-            <h2>Карточка участка</h2>
-            <p className="section-text">
-              В рабочей версии эти данные сохраняются в базе и связываются с документами участка.
-            </p>
-          </div>
-
-          <form className="request-form app-form">
-            {plotFields.map((field) => (
-              <label key={field}>
-                {field}
-                <input type="text" placeholder={field === "Кадастровый номер" ? "23:00:0000000:000" : "Заполнить"} />
-              </label>
-            ))}
-            <label>
-              Режим анализа
-              <select defaultValue="object">
-                <option value="object">Я знаю, что хочу построить</option>
-                <option value="best">Подобрать лучший вариант</option>
-              </select>
-            </label>
-            <button type="button">Запустить предварительный анализ</button>
-            <small className="form-note">Пока это макет сценария. Реальный запуск подключается после backend-хранилища документов.</small>
-          </form>
-        </div>
-      </section>
-
-      <section id="documents" className="section">
-        <div className="container split-section">
-          <div>
-            <span className="eyebrow">Документы</span>
-            <h2>Что нужно загрузить</h2>
-            <p className="section-text">
-              ИИ не делает вывод «из головы». Анализ строится только по загруженным и выбранным источникам.
-            </p>
-          </div>
-
-          <div className="table-card">
-            {documents.map((doc) => (
-              <div className="doc-row" key={doc.name}>
-                <div>
-                  <strong>{doc.name}</strong>
-                  <span>статус: {doc.status}</span>
-                </div>
-                <button type="button" className="mock-button">Макет загрузки</button>
+      {screen === "report" ? (
+        <section className="section dark-section">
+          <div className="container results-grid">
+            <div>
+              <span className="eyebrow light">Шаг 3</span>
+              <h2>Предварительный отчёт</h2>
+              <p>
+                {analysisStarted
+                  ? "Демо-анализ завершён. Ниже показан пример структуры отчёта."
+                  : "Это пример результата, который получит пользователь после загрузки документов и запуска анализа."}
+              </p>
+              <div className="hero-actions">
+                <button className="button primary" type="button" onClick={() => setScreen("plot")}>Создать новый анализ</button>
+                <button className="button secondary" type="button" onClick={() => setScreen("documents")}>Вернуться к документам</button>
               </div>
-            ))}
+            </div>
+            <div className="result-panel">
+              {reportItems.map((item) => (
+                <div className="result-item" key={item}>✓ {item}</div>
+              ))}
+              <div className="sketch-card">
+                <strong>Предварительный 2D-эскиз</strong>
+                <div className="sketch-box">
+                  <span className="plot-area">участок</span>
+                  <span className="building-area">объект</span>
+                  <span className="parking-area">парковка</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section id="report" className="section dark-section">
-        <div className="container results-grid">
-          <div>
-            <span className="eyebrow light">Результат</span>
-            <h2>Предварительный отчёт</h2>
-            <p>
-              После анализа пользователь получает структурированный вывод с рисками, рекомендациями и ссылками на источники.
-            </p>
-          </div>
-          <div className="result-panel">
-            {reportItems.map((item) => (
-              <div className="result-item" key={item}>✓ {item}</div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="section warning-section">
         <div className="container warning-box">
           <span className="eyebrow">Ограничение демо</span>
           <h2>Реальные документы в публичную версию не загружаются</h2>
           <p>
-            Для рабочей версии нужен закрытый сервер, авторизация, backend-хранилище файлов и база данных. Этот сайт показывает интерфейс и сценарий MVP.
+            Сейчас это кликабельный прототип. Для рабочей версии нужен закрытый сервер, авторизация,
+            backend-хранилище файлов и база данных.
           </p>
         </div>
       </section>
-
-      <footer className="footer">
-        <div className="container footer-inner">
-          <span>ГрадоАналитик</span>
-          <span>© 2026 · демонстрационный MVP</span>
-        </div>
-      </footer>
     </main>
   );
 }
