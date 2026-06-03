@@ -1,62 +1,95 @@
-const stats = [
-  { label: "Участков", value: "0", note: "можно создать первый" },
-  { label: "Активный ПЗЗ", value: "нет", note: "загрузить редакцию" },
-  { label: "Документов", value: "0", note: "ожидают загрузки" },
-  { label: "Отчётов", value: "0", note: "история будет здесь" },
+"use client";
+
+import { FormEvent, useState } from "react";
+
+const demoLogin = "demo";
+const demoPassword = "demo123";
+
+const steps = [
+  {
+    title: "Участок",
+    text: "Кадастровый номер, адрес, площадь и цель строительства.",
+  },
+  {
+    title: "Документы",
+    text: "ПЗЗ, ГПЗУ, ЕГРН, ЗОУИТ, схема участка и топосъёмка.",
+  },
+  {
+    title: "Отчёт",
+    text: "Вывод, ограничения, риски, рекомендации, источники и 2D-эскиз.",
+  },
 ];
 
-const currentFeatures = [
-  "готов интерфейс закрытого кабинета",
-  "показана логика участков и документов",
-  "показана версия ПЗЗ: архив / активная редакция",
-  "показана структура отчёта и 2D-эскиза",
-];
+const plotFields = ["Кадастровый номер", "Адрес", "Площадь", "Что планируется построить"];
 
-const nextFeatures = [
-  "авторизация для одного пользователя",
-  "реальная загрузка PDF/DOCX/JPG/PNG",
-  "извлечение текста из документов",
-  "ИИ-анализ по активным источникам",
-  "сохранение отчётов и истории анализов",
-];
-
-const plotFields = ["Кадастровый номер", "Адрес", "Площадь", "Размеры участка", "Сторона подъезда", "Что планируется построить"];
-
-const plotDocs = [
-  { name: "ГПЗУ", status: "не загружен", action: "Макет загрузки" },
-  { name: "Выписка ЕГРН", status: "не загружена", action: "Макет загрузки" },
-  { name: "Сведения о ЗОУИТ", status: "не загружены", action: "Макет загрузки" },
-  { name: "Схема участка", status: "не загружена", action: "Макет загрузки" },
-  { name: "Топосъёмка", status: "не загружена", action: "Макет загрузки" },
-];
-
-const normDocs = [
-  { name: "ПЗЗ", version: "редакция не выбрана", state: "требуется загрузка" },
-  { name: "Градостроительный регламент", version: "нет активной версии", state: "требуется загрузка" },
-  { name: "Карта зонирования", version: "нет файла", state: "желательно загрузить" },
-  { name: "Местные нормативы", version: "нет файла", state: "по необходимости" },
-  { name: "СП / СанПиН", version: "нет набора", state: "по необходимости" },
-];
-
-const activeSources = [
-  "Активный ПЗЗ или градостроительный регламент",
-  "ГПЗУ по конкретному участку",
-  "Выписка ЕГРН",
-  "Сведения о ЗОУИТ, если есть",
-  "Схема участка или топосъёмка",
+const documents = [
+  { name: "ПЗЗ / градостроительный регламент", status: "требуется" },
+  { name: "ГПЗУ", status: "требуется" },
+  { name: "Выписка ЕГРН", status: "требуется" },
+  { name: "Сведения о ЗОУИТ", status: "если есть" },
+  { name: "Схема участка / топосъёмка", status: "желательно" },
 ];
 
 const reportItems = [
-  "краткий вывод: можно / нельзя / возможно при условиях / данных недостаточно",
+  "можно / нельзя / возможно при условиях / данных недостаточно",
   "территориальная зона и ВРИ",
   "параметры застройки и ограничения",
   "риски и рекомендации",
-  "что запросить дальше",
-  "источники и фрагменты документов",
-  "предварительный 2D-эскиз размещения",
+  "источники документов",
+  "предварительный 2D-эскиз",
 ];
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (login === demoLogin && password === demoPassword) {
+      setIsLoggedIn(true);
+      setError("");
+      return;
+    }
+
+    setError("Неверный логин или пароль для демо-входа");
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <main className="login-screen">
+        <section className="login-card">
+          <span className="eyebrow">Демо-доступ</span>
+          <h1>Вход в закрытый кабинет</h1>
+          <p>
+            Прототип сервиса для предпроектного анализа земельных участков. Реальная авторизация и хранение документов подключаются на backend-этапе.
+          </p>
+
+          <form className="request-form login-form" onSubmit={handleLogin}>
+            <label>
+              Логин
+              <input value={login} onChange={(event) => setLogin(event.target.value)} placeholder="demo" />
+            </label>
+            <label>
+              Пароль
+              <input
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="demo123"
+                type="password"
+              />
+            </label>
+            {error ? <p className="error-message">{error}</p> : null}
+            <button type="submit">Войти в кабинет</button>
+            <small className="form-note">Тестовый доступ: demo / demo123</small>
+          </form>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main>
       <header className="site-header">
@@ -65,105 +98,69 @@ export default function Home() {
             ГрадоАналитик
           </a>
           <nav className="nav" aria-label="Основная навигация">
-            <a href="#workspace">Кабинет</a>
-            <a href="#roadmap">Этапы</a>
+            <a href="#how">Как работает</a>
+            <a href="#plot">Участок</a>
             <a href="#documents">Документы</a>
-            <a href="#analysis">Анализ</a>
-            <a href="#reports">Отчёты</a>
+            <a href="#report">Отчёт</a>
           </nav>
+          <button className="logout-button" type="button" onClick={() => setIsLoggedIn(false)}>
+            Выйти
+          </button>
         </div>
       </header>
 
-      <section id="top" className="hero">
+      <section id="top" className="hero compact-hero">
         <div className="container hero-grid">
           <div className="hero-content">
-            <span className="eyebrow">Закрытый кабинет · один пользователь · MVP-прототип</span>
-            <h1>Закрытый кабинет для предпроектного анализа участков</h1>
+            <span className="eyebrow">Закрытый MVP-кабинет</span>
+            <h1>Предпроектный анализ земельного участка</h1>
             <p>
-              Рабочий инструмент для одного заказчика: создание участков, загрузка документов,
-              хранение версий ПЗЗ, запуск предварительного анализа и сохранение отчётов.
+              Пользователь создаёт участок, загружает документы и получает предварительный вывод: можно строить, нельзя, возможно при условиях или данных недостаточно.
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#analysis">Новый анализ участка</a>
-              <a className="button secondary" href="#roadmap">Что уже готово</a>
+              <a className="button primary" href="#plot">Создать анализ</a>
+              <a className="button secondary" href="#report">Смотреть результат</a>
             </div>
           </div>
 
-          <aside className="summary-card dashboard-card" aria-label="Статус рабочего кабинета">
-            <p className="card-label">Статус кабинета</p>
-            <h2>MVP-прототип</h2>
-            <div className="status-list">
-              {stats.map((item) => (
-                <div className="status-row" key={item.label}>
-                  <span>{item.label}</span>
-                  <strong>{item.value}</strong>
-                  <small>{item.note}</small>
-                </div>
-              ))}
-            </div>
+          <aside className="summary-card">
+            <p className="card-label">Статус</p>
+            <h2>Демо-прототип</h2>
+            <ul>
+              <li>интерфейс кабинета готов</li>
+              <li>backend-каркас запущен</li>
+              <li>загрузка документов — следующий этап</li>
+            </ul>
           </aside>
         </div>
       </section>
 
-      <section id="workspace" className="section">
+      <section id="how" className="section">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">Рабочая панель</span>
-            <h2>Не лендинг, а кабинет для постоянной работы</h2>
-            <p>
-              Здесь заказчик ведёт участки, обновляет документы и запускает анализ по актуальным
-              источникам. Публичная версия используется только как прототип интерфейса.
-            </p>
+            <span className="eyebrow">Сценарий работы</span>
+            <h2>Как работает сервис</h2>
+            <p>В интерфейсе оставлены только ключевые действия, которые нужны заказчику для понимания продукта.</p>
           </div>
 
-          <div className="cards-grid workspace-grid">
-            <article className="info-card feature-card">
-              <h3>Участки</h3>
-              <p>Карточки земельных участков с кадастровым номером, адресом, площадью и целью строительства.</p>
-            </article>
-            <article className="info-card feature-card">
-              <h3>Документы</h3>
-              <p>ПЗЗ, ГПЗУ, ЕГРН, ЗОУИТ, схемы и топосъёмка с загрузкой новых версий.</p>
-            </article>
-            <article className="info-card feature-card">
-              <h3>Отчёты</h3>
-              <p>История предварительных выводов, рисков, рекомендаций, источников и 2D-эскизов.</p>
-            </article>
+          <div className="cards-grid">
+            {steps.map((step) => (
+              <article className="info-card feature-card" key={step.title}>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section id="roadmap" className="section muted-section">
-        <div className="container two-columns">
-          <div className="table-card stage-card">
-            <span className="eyebrow">Текущая версия</span>
-            <h2>Что уже показано в прототипе</h2>
-            <div className="result-panel light-panel">
-              {currentFeatures.map((feature) => (
-                <div className="result-item" key={feature}>✓ {feature}</div>
-              ))}
-            </div>
-          </div>
-
-          <div className="table-card stage-card accent-stage">
-            <span className="eyebrow">Следующий этап</span>
-            <h2>Что подключается после согласования</h2>
-            <div className="result-panel light-panel">
-              {nextFeatures.map((feature) => (
-                <div className="result-item" key={feature}>→ {feature}</div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="analysis" className="section">
+      <section id="plot" className="section muted-section">
         <div className="container app-grid">
           <div>
             <span className="eyebrow">Новый анализ</span>
             <h2>Карточка участка</h2>
             <p className="section-text">
-              Первый рабочий сценарий: ввести участок, выбрать режим анализа, подключить активные документы и запустить проверку.
+              В рабочей версии эти данные сохраняются в базе и связываются с документами участка.
             </p>
           </div>
 
@@ -182,116 +179,66 @@ export default function Home() {
               </select>
             </label>
             <button type="button">Запустить предварительный анализ</button>
-            <small className="form-note">Пока кнопка показывает будущий сценарий. Реальный запуск анализа подключается на backend-этапе.</small>
+            <small className="form-note">Пока это макет сценария. Реальный запуск подключается после backend-хранилища документов.</small>
           </form>
         </div>
       </section>
 
-      <section id="documents" className="section muted-section">
-        <div className="container">
-          <div className="section-head narrow">
-            <span className="eyebrow">Библиотека документов</span>
-            <h2>Документы можно обновлять постоянно</h2>
-            <p>
-              Если ПЗЗ обновился — загружается новая версия. Старая остаётся в архиве, а для следующего анализа используется активная редакция.
-            </p>
-          </div>
-
-          <div className="two-columns">
-            <div className="table-card">
-              <h3>Документы участка</h3>
-              {plotDocs.map((doc) => (
-                <div className="doc-row" key={doc.name}>
-                  <div>
-                    <strong>{doc.name}</strong>
-                    <span>{doc.status}</span>
-                  </div>
-                  <button type="button" className="mock-button">{doc.action}</button>
-                </div>
-              ))}
-            </div>
-
-            <div className="table-card">
-              <h3>Нормативная база</h3>
-              {normDocs.map((doc) => (
-                <div className="doc-row" key={doc.name}>
-                  <div>
-                    <strong>{doc.name}</strong>
-                    <span>{doc.version}</span>
-                  </div>
-                  <small>{doc.state}</small>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="version-card">
-            <div>
-              <span className="eyebrow">Версии</span>
-              <h3>Пример логики для ПЗЗ</h3>
-              <p>ПЗЗ редакция 2025 — архив · ПЗЗ редакция 2026 — активная · следующий анализ берёт только активную версию.</p>
-            </div>
-            <button type="button" className="mock-button">Макет добавления новой версии</button>
-          </div>
-        </div>
-      </section>
-
-      <section className="section dark-section">
-        <div className="container results-grid">
+      <section id="documents" className="section">
+        <div className="container split-section">
           <div>
-            <span className="eyebrow light">Активные источники</span>
-            <h2>ИИ анализирует не «из головы», а по выбранным документам</h2>
-            <p>
-              Перед запуском система собирает активные источники. Если нужного документа нет, отчёт обязан написать: данных недостаточно.
+            <span className="eyebrow">Документы</span>
+            <h2>Что нужно загрузить</h2>
+            <p className="section-text">
+              ИИ не делает вывод «из головы». Анализ строится только по загруженным и выбранным источникам.
             </p>
           </div>
-          <div className="result-panel">
-            {activeSources.map((source) => (
-              <div className="result-item" key={source}>✓ {source}</div>
+
+          <div className="table-card">
+            {documents.map((doc) => (
+              <div className="doc-row" key={doc.name}>
+                <div>
+                  <strong>{doc.name}</strong>
+                  <span>статус: {doc.status}</span>
+                </div>
+                <button type="button" className="mock-button">Макет загрузки</button>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="reports" className="section">
-        <div className="container report-layout">
+      <section id="report" className="section dark-section">
+        <div className="container results-grid">
           <div>
-            <span className="eyebrow">Отчёт</span>
-            <h2>Что получит единственный пользователь</h2>
-            <div className="result-panel light-panel">
-              {reportItems.map((item) => (
-                <div className="result-item" key={item}>✓ {item}</div>
-              ))}
-            </div>
+            <span className="eyebrow light">Результат</span>
+            <h2>Предварительный отчёт</h2>
+            <p>
+              После анализа пользователь получает структурированный вывод с рисками, рекомендациями и ссылками на источники.
+            </p>
           </div>
-
-          <div className="sketch-card">
-            <h3>Предварительный 2D-эскиз</h3>
-            <div className="plot-sketch">
-              <span className="plot-label">участок</span>
-              <div className="building">объект</div>
-              <div className="parking">парковка</div>
-              <div className="entry">въезд</div>
-            </div>
-            <p>Пока это визуальная заглушка. Позже схема будет строиться из layout_json.</p>
+          <div className="result-panel">
+            {reportItems.map((item) => (
+              <div className="result-item" key={item}>✓ {item}</div>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="section warning-section">
         <div className="container warning-box">
-          <span className="eyebrow">Ограничение публичного прототипа</span>
-          <h2>Не загружать реальные документы в публичную MVP-страницу</h2>
+          <span className="eyebrow">Ограничение демо</span>
+          <h2>Реальные документы в публичную версию не загружаются</h2>
           <p>
-            GitHub Pages используется только для показа интерфейса. Для настоящих ГПЗУ, ЕГРН и ПЗЗ нужен закрытый сервер, авторизация и backend-хранилище.
+            Для рабочей версии нужен закрытый сервер, авторизация, backend-хранилище файлов и база данных. Этот сайт показывает интерфейс и сценарий MVP.
           </p>
         </div>
       </section>
 
       <footer className="footer">
         <div className="container footer-inner">
-          <strong>ГрадоАналитик</strong>
-          <span>© 2026 · закрытый MVP для одного пользователя</span>
+          <span>ГрадоАналитик</span>
+          <span>© 2026 · демонстрационный MVP</span>
         </div>
       </footer>
     </main>
