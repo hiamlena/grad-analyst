@@ -1,0 +1,154 @@
+.clean-shell {
+  min-height: 100vh;
+}
+
+.clean-header .header-inner {
+  min-height: 68px;
+}
+
+.clean-nav {
+  gap: 4px;
+  padding: 5px;
+}
+
+.clean-nav button {
+  min-width: 88px;
+  padding: 10px 14px;
+}
+
+.clean-nav button span {
+  font-size: 13px;
+}
+
+.demo-strip {
+  padding: 12px 0 0;
+}
+
+.demo-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(216, 169, 79, 0.34);
+  border-radius: 18px;
+  padding: 12px 16px;
+  background: rgba(255, 248, 237, 0.86);
+  color: #7c2d12;
+  font-size: 14px;
+}
+
+.demo-strip-inner strong {
+  white-space: nowrap;
+  font-weight: 950;
+}
+
+.clean-dashboard {
+  padding-top: 38px;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 32px;
+  align-items: stretch;
+}
+
+.dashboard-main {
+  position: relative;
+  overflow: hidden;
+  border-radius: 34px;
+  padding: 44px;
+  background:
+    radial-gradient(circle at top right, rgba(216, 169, 79, 0.22), transparent 34%),
+    linear-gradient(135deg, #06152f, #0b1f49 56%, #123ca3);
+  color: #ffffff;
+  box-shadow: 0 28px 90px rgba(15, 23, 42, 0.18);
+}
+
+.dashboard-main .eyebrow {
+  background: rgba(255, 255, 255, 0.12);
+  color: #dbeafe;
+}
+
+.dashboard-main h1 {
+  max-width: 760px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: clamp(38px, 6vw, 66px);
+}
+
+.dashboard-main p {
+  max-width: 720px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.dashboard-main p strong {
+  color: #ffffff;
+}
+
+.action-card {
+  min-height: auto;
+}
+
+.compact-section {
+  padding-top: 44px;
+}
+
+.clean-login h1 {
+  color: #081833;
+}
+
+.clean-login .request-form {
+  margin-top: 24px;
+}
+
+@media (max-width: 900px) {
+  .demo-strip-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-main {
+    border-radius: 26px;
+    padding: 28px 22px;
+  }
+
+  .dashboard-main h1 {
+    font-size: 36px;
+  }
+
+  .clean-nav button {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .demo-strip {
+    padding-top: 8px;
+  }
+
+  .clean-dashboard,
+  .compact-section {
+    padding-top: 28px;
+  }
+
+  .dashboard-main h1 {
+    font-size: 31px;
+    letter-spacing: -0.055em;
+  }
+
+  .dashboard-main p {
+    font-size: 15px;
+  }
+
+  .clean-nav button span {
+    font-size: 11px;
+  }
+}
