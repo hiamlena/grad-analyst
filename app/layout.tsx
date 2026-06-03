@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./cabinet.css";
+import "./plan.css";
 
 export const metadata: Metadata = {
   title: "ГрадоАналитик — закрытый кабинет анализа участков",
