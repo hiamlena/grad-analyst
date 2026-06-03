@@ -343,19 +343,46 @@ export default function Home() {
                 <p>Данных недостаточно. Для уверенного вывода нужно загрузить: ПЗЗ, сведения о ЗОУИТ, актуальную выписку ЕГРН и схему инженерных сетей.</p>
               </div>
 
-              <div className="sketch-card">
+              <div className="sketch-card planning-card">
                 <div className="card-topline">
                   <div>
                     <strong>Предварительный 2D-эскиз</strong>
-                    <span>пример компоновки участка</span>
+                    <span>демо-компоновка участка с отступами и зонами</span>
                   </div>
-                  <span className="quality-badge">SVG-ready</span>
+                  <span className="quality-badge">layout json</span>
                 </div>
-                <div className="sketch-box">
-                  <span className="plot-area">участок</span>
-                  <span className="building-area">объект</span>
-                  <span className="parking-area">парковка</span>
-                  <span className="entry-area">въезд</span>
+
+                <div className="planning-board" aria-label="Предварительная схема размещения объекта на участке">
+                  <div className="board-toolbar">
+                    <span>Схема 1:500</span>
+                    <strong>Коммерческий объект · 1200 м²</strong>
+                  </div>
+
+                  <div className="site-plan">
+                    <span className="north-arrow">N</span>
+                    <span className="dimension dimension-top">40 м</span>
+                    <span className="dimension dimension-left">30 м</span>
+                    <div className="setback-line">отступ 3 м</div>
+                    <div className="road-zone">подъездная дорога</div>
+                    <div className="entry-gate">въезд</div>
+                    <div className="main-building">
+                      <strong>Объект</strong>
+                      <span>18×10 м</span>
+                    </div>
+                    <div className="parking-zone">
+                      <strong>P</strong>
+                      <span>6 м/м</span>
+                    </div>
+                    <div className="tech-zone">тех. зона</div>
+                    <div className="green-zone">озеленение</div>
+                  </div>
+
+                  <div className="plan-legend">
+                    <span><i className="legend-building" /> объект</span>
+                    <span><i className="legend-parking" /> парковка</span>
+                    <span><i className="legend-tech" /> техзона</span>
+                    <span><i className="legend-green" /> зелёная зона</span>
+                  </div>
                 </div>
               </div>
             </div>
