@@ -6,6 +6,7 @@ import "./clean.css";
 import "./login.css";
 import "./minimal.css";
 import "./exec.css";
+import "./ideal-image.css";
 
 export const metadata: Metadata = {
   title: "ГрадоАналитик — закрытый кабинет анализа участков",
