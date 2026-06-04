@@ -1,0 +1,61 @@
+.compact-login-form {
+  gap: 14px;
+}
+
+.demo-main-button {
+  width: 100%;
+  min-height: 58px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+}
+
+.manual-login {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  background: #ffffff;
+}
+
+.manual-login summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 17px 18px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.manual-login summary::-webkit-details-marker {
+  display: none;
+}
+
+.manual-login[open] {
+  padding: 0 18px 18px;
+}
+
+.manual-login[open] summary {
+  margin: 0 -18px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #f8fafc;
+  border-radius: 16px 16px 0 0;
+}
+
+.manual-login label {
+  margin-bottom: 12px;
+}
+
+.manual-login button {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.compact-login-form .form-note {
+  margin-top: 4px;
+  color: #64748b;
+  text-align: center;
+}
