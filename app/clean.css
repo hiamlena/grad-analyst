@@ -47,16 +47,17 @@
 
 .dashboard-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 344px);
+  gap: 24px;
   align-items: stretch;
 }
 
 .dashboard-main {
   position: relative;
+  min-width: 0;
   overflow: hidden;
-  border-radius: 34px;
-  padding: 44px;
+  border-radius: 30px;
+  padding: 38px;
   background: radial-gradient(circle at top right, rgba(216, 169, 79, 0.22), transparent 34%), linear-gradient(135deg, #06152f, #0b1f49 56%, #123ca3);
   color: #ffffff;
   box-shadow: 0 28px 90px rgba(15, 23, 42, 0.18);
@@ -68,17 +69,20 @@
 }
 
 .dashboard-main h1 {
-  max-width: 760px;
-  margin-bottom: 18px;
+  max-width: 720px;
+  margin-bottom: 16px;
   color: #ffffff;
-  font-size: clamp(38px, 6vw, 66px);
+  font-size: clamp(34px, 4.2vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  overflow-wrap: anywhere;
 }
 
 .dashboard-main p {
-  max-width: 720px;
+  max-width: 650px;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 18px;
-  line-height: 1.65;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 .dashboard-main p strong {
@@ -225,16 +229,23 @@
   font-size: 15px;
 }
 
+@media (max-width: 1200px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-main h1 {
+    max-width: 760px;
+    overflow-wrap: normal;
+  }
+}
+
 @media (max-width: 900px) {
   .demo-strip-inner {
     align-items: flex-start;
     flex-direction: column;
     gap: 4px;
     font-size: 12px;
-  }
-
-  .dashboard-layout {
-    grid-template-columns: 1fr;
   }
 
   .dashboard-main {
