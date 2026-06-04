@@ -57,9 +57,7 @@
   overflow: hidden;
   border-radius: 34px;
   padding: 44px;
-  background:
-    radial-gradient(circle at top right, rgba(216, 169, 79, 0.22), transparent 34%),
-    linear-gradient(135deg, #06152f, #0b1f49 56%, #123ca3);
+  background: radial-gradient(circle at top right, rgba(216, 169, 79, 0.22), transparent 34%), linear-gradient(135deg, #06152f, #0b1f49 56%, #123ca3);
   color: #ffffff;
   box-shadow: 0 28px 90px rgba(15, 23, 42, 0.18);
 }
@@ -91,6 +89,36 @@
   min-height: auto;
 }
 
+.next-stage-card {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 18px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fbff, #eef4ff);
+}
+
+.next-stage-card strong {
+  color: var(--blue-dark);
+  font-size: 15px;
+}
+
+.next-stage-card div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.next-stage-card span {
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 850;
+}
+
 .compact-section {
   padding-top: 36px;
   padding-bottom: 54px;
@@ -102,6 +130,31 @@
 
 .clean-login .request-form {
   margin-top: 24px;
+}
+
+.sources-card {
+  display: grid;
+  gap: 10px;
+}
+
+.source-row {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.source-row strong {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.source-row span {
+  color: #dbeafe;
+  font-size: 13px;
+  line-height: 1.35;
 }
 
 .dark-section.compact-section .results-grid {
@@ -229,6 +282,19 @@
     font-size: 11px;
   }
 
+  .next-stage-card {
+    padding: 13px;
+  }
+
+  .next-stage-card div {
+    gap: 6px;
+  }
+
+  .next-stage-card span {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
   .dark-section.compact-section {
     padding-top: 24px;
     padding-bottom: 32px;
@@ -311,5 +377,16 @@
 
   .dark-section.compact-section .source-card p {
     font-size: 13px;
+  }
+
+  .source-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 10px 12px;
+  }
+
+  .source-row strong,
+  .source-row span {
+    font-size: 12px;
   }
 }
