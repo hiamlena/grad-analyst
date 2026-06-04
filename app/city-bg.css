@@ -1,0 +1,61 @@
+.login-screen {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 12%, rgba(184, 155, 94, 0.12), transparent 34%),
+    linear-gradient(135deg, #f7f4ee 0%, #ebe5d8 100%);
+}
+
+.login-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.34;
+  background:
+    linear-gradient(90deg, rgba(36, 37, 31, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(36, 37, 31, 0.06) 1px, transparent 1px),
+    linear-gradient(30deg, transparent 0 48%, rgba(36, 37, 31, 0.05) 49% 51%, transparent 52% 100%);
+  background-size: 92px 92px, 92px 92px, 260px 260px;
+}
+
+.login-screen::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: 0;
+  z-index: -1;
+  width: min(760px, 84vw);
+  height: 230px;
+  opacity: 0.14;
+  background:
+    linear-gradient(to top, #24251f, #24251f) 0 100% / 8% 44%,
+    linear-gradient(to top, #24251f, #24251f) 10% 100% / 5% 70%,
+    linear-gradient(to top, #24251f, #24251f) 18% 100% / 10% 55%,
+    linear-gradient(to top, #24251f, #24251f) 31% 100% / 6% 82%,
+    linear-gradient(to top, #24251f, #24251f) 40% 100% / 10% 60%,
+    linear-gradient(to top, #24251f, #24251f) 53% 100% / 7% 76%,
+    linear-gradient(to top, #24251f, #24251f) 64% 100% / 12% 50%,
+    linear-gradient(to top, #24251f, #24251f) 80% 100% / 8% 78%,
+    linear-gradient(to top, #24251f, #24251f) 92% 100% / 10% 60%;
+  background-repeat: no-repeat;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+}
+
+@media (max-width: 520px) {
+  .login-screen::before {
+    background-size: 64px 64px, 64px 64px, 200px 200px;
+  }
+
+  .login-screen::after {
+    right: -120px;
+    width: 120vw;
+    height: 150px;
+    opacity: 0.1;
+  }
+}
