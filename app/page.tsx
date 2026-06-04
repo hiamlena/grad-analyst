@@ -35,10 +35,14 @@ const reportSections = [
   { title: "Не хватает", value: "ПЗЗ и ЗОУИТ", tone: "neutral" },
 ];
 
-const sourceItems = [
+const usedSources = [
   { title: "ЕГРН", text: "площадь, ВРИ, кадастровый номер" },
   { title: "ГПЗУ", text: "параметры застройки, отступы, ограничения" },
-  { title: "ПЗЗ", text: "регламент, территориальная зона" },
+  { title: "Схема участка", text: "форма участка, подъезд, размещение" },
+];
+
+const requiredSources = [
+  { title: "ПЗЗ", text: "регламент и территориальная зона" },
   { title: "ЗОУИТ", text: "ограничения и охранные зоны" },
 ];
 
@@ -46,13 +50,8 @@ function PlanSvg() {
   return (
     <svg className="plan-svg" viewBox="0 0 760 430" role="img" aria-label="Схема участка с объектом, парковкой, въездом и отступами">
       <defs>
-        <pattern id="planGrid" width="24" height="24" patternUnits="userSpaceOnUse">
-          <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dbeafe" strokeWidth="1" />
-        </pattern>
-        <linearGradient id="buildingFill" x1="0" x2="1" y1="0" y2="1">
-          <stop offset="0" stopColor="#f1c76a" />
-          <stop offset="1" stopColor="#d8a94f" />
-        </linearGradient>
+        <pattern id="planGrid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dbeafe" strokeWidth="1" /></pattern>
+        <linearGradient id="buildingFill" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#f1c76a" /><stop offset="1" stopColor="#d8a94f" /></linearGradient>
       </defs>
       <rect x="0" y="0" width="760" height="430" rx="28" fill="#f8fafc" />
       <rect x="28" y="34" width="704" height="328" rx="24" fill="url(#planGrid)" stroke="#1e3a8a" strokeWidth="2" />
@@ -90,6 +89,7 @@ export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const loadedDocs = useMemo(() => docs.filter((doc) => doc.loaded).length, []);
+  const missingDocs = docs.filter((doc) => !doc.loaded).map((doc) => doc.name).join(", ");
 
   function openDemoCabinet() {
     setLogin(demoLogin);
@@ -118,6 +118,10 @@ export default function Home() {
   function handleStartAnalysis() {
     setAnalysisStarted(true);
     setScreen("report");
+  }
+
+  function handleFilePick(files: FileList | null) {
+    setSelectedFiles(Array.from(files ?? []));
   }
 
   function navClass(key: Screen) {
@@ -174,12 +178,12 @@ export default function Home() {
           <div className="container">
             <div className="dashboard-main premium-hero">
               <span className="eyebrow">Текущий анализ</span>
-              <h1>Краснодарский край, демонстрационный участок</h1>
-              <p>Статус: <strong>возможно при условиях</strong>. Для уверенного вывода нужны ПЗЗ и сведения о ЗОУИТ.</p>
+              <h1>Участок № 23:00:0000000:000</h1>
+              <p>Краснодарский край · 1 200 м² · коммерческий объект. Статус: <strong>возможно при условиях</strong>.</p>
               <div className="premium-metrics">
                 <div><span>Участок</span><strong>{plotCreated ? "готов" : "пример"}</strong></div>
                 <div><span>Документы</span><strong>{loadedDocs}/{docs.length}</strong></div>
-                <div><span>Отчёт</span><strong>{analysisStarted ? "готов" : "пример"}</strong></div>
+                <div><span>Не хватает</span><strong>ПЗЗ, ЗОУИТ</strong></div>
               </div>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={() => setScreen("plot")}>Продолжить анализ</button>
@@ -222,12 +226,12 @@ export default function Home() {
               <h2>Пакет для анализа</h2>
               <p className="section-text">Загрузите документы по участку. В рабочей версии система извлечёт текст, найдёт источники и сформирует предварительный вывод.</p>
               <label className="upload-dropzone">
-                <input type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onChange={(event) => setSelectedFiles(Array.from(event.target.files ?? []))} />
+                <input type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onChange={(event) => handleFilePick(event.target.files)} />
                 <strong>Выбрать файлы</strong>
                 <span>PDF, DOCX, JPG, PNG</span>
               </label>
               <div className="upload-note">
-                {selectedFiles.length ? `${selectedFiles.length} файл(а) выбрано в демо-интерфейсе` : "Файлы в демо-режиме не отправляются на сервер"}
+                {selectedFiles.length ? `${selectedFiles.length} файл(а) выбрано в демо-интерфейсе` : "Для демонстрации отчёт формируется на тестовых данных"}
               </div>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={handleStartAnalysis}>Сформировать пример отчёта</button>
@@ -238,12 +242,20 @@ export default function Home() {
             <div className="table-card documents-card">
               <div className="card-topline">
                 <div><p className="card-label">Комплект</p><h3>{loadedDocs} из {docs.length}</h3></div>
-                <span className="quality-badge">пример</span>
+                <span className="quality-badge">неполный</span>
               </div>
+              <div className="kit-warning">Не хватает: {missingDocs}</div>
               {docs.map((doc) => (
                 <div className="doc-row" key={doc.name}>
                   <div><strong>{doc.name}</strong><span>{doc.note}</span></div>
-                  <button type="button" className={doc.loaded ? "mock-button success" : "mock-button add-file"}>{doc.status}</button>
+                  {doc.loaded ? (
+                    <span className="mock-button success">{doc.status}</span>
+                  ) : (
+                    <label className="mock-button add-file">
+                      {doc.status}
+                      <input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onChange={(event) => handleFilePick(event.target.files)} />
+                    </label>
+                  )}
                 </div>
               ))}
             </div>
@@ -258,21 +270,29 @@ export default function Home() {
               <span className="eyebrow light">Отчёт</span>
               <h2>Экспертное резюме</h2>
               <p>{analysisStarted ? "Сформирован пример будущего результата." : "Пример предварительного отчёта по демонстрационному участку."}</p>
+              <div className="legal-note">Предварительный аналитический вывод. Не является ГПЗУ, разрешением на строительство, проектной документацией или юридическим заключением.</div>
               <div className="hero-actions">
                 <button className="button primary" type="button" onClick={() => setScreen("documents")}>Вернуться к документам</button>
-                <button className="button secondary dark-secondary" type="button">Скачать пример PDF</button>
+                <button className="button secondary dark-secondary pdf-disabled" type="button" disabled>PDF-выгрузка — следующий этап</button>
               </div>
             </div>
             <div className="result-panel">
               <div className="report-summary-grid">
                 {reportSections.map((item) => (<article className={`report-kpi ${item.tone}`} key={item.title}><span>{item.title}</span><strong>{item.value}</strong></article>))}
               </div>
-              <div className="result-block"><h3>Риски</h3>{riskItems.map((item) => (<div className="result-item" key={item}>✓ {item}</div>))}</div>
+              <div className="result-block"><h3>Риски</h3>{riskItems.map((item) => (<div className="result-item warning-item" key={item}>! {item}</div>))}</div>
               <div className="source-card"><h3>Недостающие данные</h3><p>Данных недостаточно. Для уверенного вывода нужно загрузить: ПЗЗ, сведения о ЗОУИТ, актуальную выписку ЕГРН и схему инженерных сетей.</p></div>
-              <div className="source-card sources-card"><h3>Источники анализа</h3>{sourceItems.map((source) => (<div className="source-row" key={source.title}><strong>{source.title}</strong><span>{source.text}</span></div>))}</div>
+              <div className="source-card sources-card">
+                <h3>Источники анализа</h3>
+                <div className="source-group-title">Использованы</div>
+                {usedSources.map((source) => (<div className="source-row" key={source.title}><strong>{source.title}</strong><span>{source.text}</span></div>))}
+                <div className="source-group-title required">Требуются</div>
+                {requiredSources.map((source) => (<div className="source-row required-source" key={source.title}><strong>{source.title}</strong><span>{source.text}</span></div>))}
+              </div>
               <div className="sketch-card planning-card">
-                <div className="card-topline"><div><strong>Предварительная схема размещения</strong><span>векторная схема будущего layout_json</span></div><span className="quality-badge">svg</span></div>
+                <div className="card-topline"><div><strong>Предварительная схема размещения</strong><span>целевой визуальный макет</span></div><span className="quality-badge">svg</span></div>
                 <div className="planning-board svg-board" aria-label="Предварительная схема размещения объекта на участке"><div className="board-toolbar"><span>Схема 1:500</span><strong>Коммерческий объект · 1200 м²</strong></div><PlanSvg /><div className="plan-legend"><span><i className="legend-building" /> объект</span><span><i className="legend-parking" /> парковка</span><span><i className="legend-tech" /> техзона</span><span><i className="legend-green" /> зелёная зона</span></div></div>
+                <p className="scheme-note">Это целевой визуальный макет. Рабочая схема будет формироваться после анализа документов и помечать неподтверждённые элементы как условные.</p>
               </div>
             </div>
           </div>
